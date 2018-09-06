@@ -16,12 +16,21 @@ public class ControladorPrincipal implements ActionListener{
 
     public ControladorPrincipal(vistaPrincipal aThis) {
         ventanaPrincipal = aThis;
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ventanaPrincipal.getModelo().funcionVistaCuenta();
+        if(e.getSource()== ventanaPrincipal.BtnCategorias){
+            ventanaPrincipal.getModelo().funcionVistaCatego();
+        }
+        
+        if(e.getSource()== ventanaPrincipal.BtnCuentas){
+            ventanaPrincipal.getModelo().funcionVistaCuenta();
+        }
+        
     }
-    
+
+   
 }
 

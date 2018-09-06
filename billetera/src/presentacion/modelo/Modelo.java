@@ -17,14 +17,7 @@ public class Modelo {
     private vistaPrincipal vistaPrincipal;
     private vistaCategorias vistaCategoria;
     private logBilletera Logica;
-//metodo que inicia el sistema
-/*    public Billetera getSistema() {
-        if(sistema == null){
-            sistema = new Billetera();
-        }
-        return sistema;
-    }      
-*/	
+
 //metodo de la vista principal
     public vistaPrincipal getVistaPrincipal() {
         if(vistaPrincipal == null){
@@ -46,8 +39,9 @@ public class Modelo {
     }      
 //especificacion de la venta al iniciar    
     public void iniciar() {
-        getVistaPrincipal().setSize(300, 300);
+        //getVistaPrincipal().setSize(300, 300);
         getVistaPrincipal().setVisible(true);
+        //getVistaCategorias().setVisible(false);
 /// y demas especificaciones visuales de las ventana
     }
 
@@ -58,8 +52,7 @@ public class Modelo {
 	//para la vista cuentas
 	public void funcionVistaCuenta(){
 	//Muchas cosas para crear la vista 
-           getVistaCategorias();
-          
+            System.out.println("para cuenta");
     }
 
 	//para la vista movimientos
@@ -70,7 +63,8 @@ public class Modelo {
 	//para la vista Categoria
 	public void funcionVistaCatego(){
 	//Muchas cosas para crear la vista        
-
+           getVistaCategorias().setVisible(true);
+           getVistaPrincipal().setVisible(false);  
     }
 
 	//para la vista Reportes
@@ -169,18 +163,18 @@ public class Modelo {
     }				
     public void funcionCatCrear(){
 	String nombreCategoria;
-        int tipo;
+        String tipo;
         Boolean resultado;
         
-        nombreCategoria=getVistaCategorias().getName();
-        tipo=Integer.parseInt(getVistaCategorias().getCbTipoCat().toString());
+        nombreCategoria=getVistaCategorias().getTxtNombreCat().getText();
+        tipo=getVistaCategorias().getCbTipoCat().getSelectedItem().toString();
         
-        getLogica().setNombreCategoria(nombreCategoria);
+        /*getLogica().setNombreCategoria(nombreCategoria);
         getLogica().setTipoMovimiento(tipo);
         
         resultado=getLogica().crearCategoria();
-        
-        System.out.println("resultado: "+resultado);
+        */
+        System.out.println("Crear categoria: "+nombreCategoria+" "+tipo);
     }
 	
     }

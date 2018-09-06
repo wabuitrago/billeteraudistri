@@ -5,17 +5,23 @@
  */
 package billetera;
 
-/**
- *
- * @author William
- */
+import presentacion.modelo.Modelo;
+
+
 public class Billetera {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+private Modelo mibilletera;
+
+
+    public Billetera() {
+        mibilletera = new Modelo();
+        mibilletera.iniciar();
     }
     
+    public static void main(String[] args) {
+        new Billetera();
+    }
+    
+
+
 }

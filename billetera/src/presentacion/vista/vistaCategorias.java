@@ -4,13 +4,12 @@ package presentacion.vista;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import presentacion.controlador.ControladorCategoria;
-import presentacion.controlador.ControladorPrincipal;
 import presentacion.modelo.Modelo;
 
 
 public class vistaCategorias extends javax.swing.JFrame {
 
-private Modelo modelo;
+    private Modelo modelo;
     private ControladorCategoria control;
     
     public vistaCategorias(Modelo s) {
@@ -33,18 +32,11 @@ private Modelo modelo;
         return CbTipoCat;
     }
 
-    public void setCbTipoCat(JComboBox<String> CbTipoCat) {
-        this.CbTipoCat = CbTipoCat;
-    }
-
     public JTextField getTxtNombreCat() {
         return TxtNombreCat;
     }
 
-    public void setTxtNombreCat(JTextField TxtNombreCat) {
-        this.TxtNombreCat = TxtNombreCat;
-    }
-    
+     
     
    
     @SuppressWarnings("unchecked")
@@ -63,7 +55,7 @@ private Modelo modelo;
 
         BtnCrearCat.setText("Crear");
 
-        CbTipoCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        CbTipoCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Egreso" }));
         CbTipoCat.setToolTipText("");
         CbTipoCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +72,7 @@ private Modelo modelo;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(BtnCrearCat)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CbTipoCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)

@@ -97,10 +97,10 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnCategorias;
-    private javax.swing.JButton BtnCuentas;
-    private javax.swing.JButton BtnMovimientos;
-    private javax.swing.JButton BtnReportes;
+    public javax.swing.JButton BtnCategorias;
+    public javax.swing.JButton BtnCuentas;
+    public javax.swing.JButton BtnMovimientos;
+    public javax.swing.JButton BtnReportes;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
