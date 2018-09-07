@@ -15,23 +15,13 @@ import Sistema.DTO.categoria;
 public class logBilletera {
     
     private String nombreCategoria;
+    private String nombreTipoMovimiento;
     private int tipoMovimiento;
+    private int idCategoria;
     
-    /*public static void main(String[] args) {
-        categoriaDAO catDao = new categoriaDAO();
-        
-        //crear categoria
-        catDao.create(new categoria(0, "pruebajava", 1));
-        
-        //actualizar categoria
-        //catDao.update(new categoria(3, "actualizaJava", 2));
-        
-        //consulta id categoria
-        categoria categoBuscar = catDao.read("3");
-        System.out.println(categoBuscar.getNombreCategoria());
-        
-    }*/
-    
+    /**
+    * Funcion para mapear la creacion de una categoria
+    */
     public boolean crearCategoria(){
         //inicializa Dao de categorias
         categoriaDAO categoriasDao = new categoriaDAO();
@@ -40,6 +30,16 @@ public class logBilletera {
         return categoriasDao.create(new categoria(0, this.nombreCategoria, this.tipoMovimiento));
     }
 
+    
+    
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+            
     public String getNombreCategoria() {
         return nombreCategoria;
     }
@@ -56,5 +56,11 @@ public class logBilletera {
         this.tipoMovimiento = tipoMovimiento;
     }
     
-    
+    public int getNombreTipoMovimiento() {
+        return nombreTipoMovimiento;
+    }
+
+    public void setNombreTipoMovimiento(int nombreTipoMovimiento) {
+        this.nombreTipoMovimiento = nombreTipoMovimiento;
+    }
 }
