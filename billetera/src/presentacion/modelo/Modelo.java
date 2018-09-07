@@ -173,12 +173,15 @@ public class Modelo {
         }else{
             numtipo=2;
         }
-        /*getLogica().setNombreCategoria(nombreCategoria);
-        getLogica().setTipoMovimiento(tipo);
+        getLogica().setNombreCategoria(nombreCategoria);
+        getLogica().setTipoMovimiento(numtipo);
         
         resultado=getLogica().crearCategoria();
-        */
-        System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
+        
+        if(resultado)
+            System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
+        else
+            System.out.println("Error al crear categoria: "+nombreCategoria+" - "+numtipo);
     }
 	
     }

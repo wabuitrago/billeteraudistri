@@ -56,11 +56,11 @@ public class logBilletera {
         this.tipoMovimiento = tipoMovimiento;
     }
     
-    public int getNombreTipoMovimiento() {
+    public String getNombreTipoMovimiento() {
         return nombreTipoMovimiento;
     }
 
-    public void setNombreTipoMovimiento(int nombreTipoMovimiento) {
+    public void setNombreTipoMovimiento(String nombreTipoMovimiento) {
         this.nombreTipoMovimiento = nombreTipoMovimiento;
     }
 }
