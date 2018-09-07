@@ -162,19 +162,23 @@ public class Modelo {
 	//Muchas cosas para crear la vista        
     }				
     public void funcionCatCrear(){
-	String nombreCategoria;
-        String tipo;
+	String nombreCategoria, tipo;
+        int numtipo;
         Boolean resultado;
         
         nombreCategoria=getVistaCategorias().getTxtNombreCat().getText();
         tipo=getVistaCategorias().getCbTipoCat().getSelectedItem().toString();
-        
+        if (tipo.equals("Ingreso")) {
+            numtipo=1;
+        }else{
+            numtipo=2;
+        }
         /*getLogica().setNombreCategoria(nombreCategoria);
         getLogica().setTipoMovimiento(tipo);
         
         resultado=getLogica().crearCategoria();
         */
-        System.out.println("Crear categoria: "+nombreCategoria+" "+tipo);
+        System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
     }
 	
     }
