@@ -86,10 +86,10 @@ public class tipoCuentaDAO implements CRUD<tipoCuenta>{
     }
 
     @Override
-    public tipoCuenta read(Object llave) {
+    public List<tipoCuenta> read(Object llave) {
         PreparedStatement ps;
         ResultSet rs;
-        tipoCuenta tipCuen = null;
+        ArrayList<tipoCuenta> tipCuen = new ArrayList();
         
         try {
                         
@@ -99,7 +99,7 @@ public class tipoCuentaDAO implements CRUD<tipoCuenta>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                tipCuen = new tipoCuenta(rs.getInt(1), rs.getString(2));
+                tipCuen.add(new tipoCuenta(rs.getInt(1), rs.getString(2)));
             }
             
         } catch (SQLException ex) {

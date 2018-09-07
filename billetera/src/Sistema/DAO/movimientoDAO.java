@@ -94,10 +94,10 @@ public class movimientoDAO implements CRUD<movimiento>{
     }
 
     @Override
-    public movimiento read(Object llave) {
+    public List<movimiento> read(Object llave) {
         PreparedStatement ps;
         ResultSet rs;
-        movimiento movimien = null;
+        ArrayList<movimiento> movimien = new ArrayList();
         
         try {
                         
@@ -107,7 +107,7 @@ public class movimientoDAO implements CRUD<movimiento>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                movimien = new movimiento(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
+                movimien.add(new movimiento(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
             }
             
         } catch (SQLException ex) {

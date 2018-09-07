@@ -25,8 +25,8 @@ public class cuentaDAO implements CRUD<cuenta>{
     private static final String SQL_INSERT = "INSERT INTO cuenta(nombreCuenta, idTipoCuenta, documento, saldo) VALUES(?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM cuenta WHERE idCuenta = ?";
     private static final String SQL_UPDATE = "UPDATE cuenta SET nombreCuenta = ?, idTipoCuenta = ?, saldo = ? WHERE idCuenta = ?";
-    private static final String SQL_READ = "SELECT idCuenta, nombreCuenta, idTipoCuenta, documento, saldo FROM cuenta WHERE idCuenta = ?";
-    private static final String SQL_READALL = "SELECT idCuenta, nombreCuenta, idTipoCuenta, documento, saldo FROM cuenta ";
+    private static final String SQL_READ = "SELECT idCuenta, nombreCuenta, tc.idTipoCuenta, documento, saldo, tc.Nombre FROM cuenta c inner join tipoCuenta tc on tc.idTipoCuenta=c.idTipoCuenta WHERE idCuenta = ?";
+    private static final String SQL_READALL = "SELECT idCuenta, nombreCuenta, tc.idTipoCuenta, documento, saldo, tc.Nombre FROM cuenta c inner join tipoCuenta tc on tc.idTipoCuenta=c.idTipoCuenta";
     
     private static final Conexion cn = Conexion.conectarse();
     
@@ -91,10 +91,10 @@ public class cuentaDAO implements CRUD<cuenta>{
     }
 
     @Override
-    public cuenta read(Object llave) {
+    public List<cuenta> read(Object llave) {
         PreparedStatement ps;
         ResultSet rs;
-        cuenta cuent = null;
+        ArrayList<cuenta> cuent = new ArrayList();
         
         try {
                         
@@ -104,7 +104,8 @@ public class cuentaDAO implements CRUD<cuenta>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                cuent = new cuenta(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+                System.out.println("Valor del campo" + rs.getInt(1));
+                cuent.add(new cuenta(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6)));
             }
             
         } catch (SQLException ex) {
@@ -127,7 +128,7 @@ public class cuentaDAO implements CRUD<cuenta>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                cuentas.add(new cuenta(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5)));
+                cuentas.add(new cuenta(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6)));
             }
             
         } catch (SQLException ex) {

@@ -13,6 +13,7 @@ public class cuenta {
     private int idCuenta;
     private String nombreCuenta;
     private int idTipoCuenta;
+    private String nombreTipoCuenta;
     private int documento;
     private int saldo;
 
@@ -23,12 +24,13 @@ public class cuenta {
         this.idCuenta = idCuenta;
     }
     
-    public cuenta(int idCuenta, String nombreCuenta, int idTipoCuenta, int documento, int saldo) {
+    public cuenta(int idCuenta, String nombreCuenta, int idTipoCuenta, int documento, int saldo, String nombreTipoCuenta) {
         this.idCuenta = idCuenta;
         this.nombreCuenta = nombreCuenta;
         this.idTipoCuenta = idTipoCuenta;
         this.documento = documento;
         this.saldo = saldo;
+        this.nombreCuenta = nombreCuenta;
     }
 
     public int getDocumento() {
@@ -71,5 +73,11 @@ public class cuenta {
         this.saldo = saldo;
     }
     
-    
+    public String getNombreTipoCuenta() {
+        return nombreTipoCuenta;
+    }
+
+    public void setNombreTipoCuenta(String nombreTipoCuenta) {
+        this.nombreTipoCuenta = nombreTipoCuenta;
+    }
 }

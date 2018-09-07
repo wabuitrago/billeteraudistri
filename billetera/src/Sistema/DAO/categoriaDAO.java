@@ -88,10 +88,10 @@ public class categoriaDAO implements CRUD<categoria>{
     }
 
     @Override
-    public categoria read(Object llave) {
+    public List<categoria> read(Object llave) {
         PreparedStatement ps;
         ResultSet rs;
-        categoria cat = null;
+        ArrayList<categoria> cat = new ArrayList();
         
         try {
                         
@@ -101,7 +101,7 @@ public class categoriaDAO implements CRUD<categoria>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                cat = new categoria(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                cat.add(new categoria(rs.getInt(1), rs.getString(2), rs.getInt(3)));
             }
             
         } catch (SQLException ex) {

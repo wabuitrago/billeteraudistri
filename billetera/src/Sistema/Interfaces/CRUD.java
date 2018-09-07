@@ -16,6 +16,6 @@ public interface CRUD <camposTabla> {
     public boolean delete(Object llave);
     public boolean update(camposTabla campos);
     
-    public camposTabla read(Object llave);
+    public List<camposTabla> read(Object llave);
     public List<camposTabla> readAll();
 }
