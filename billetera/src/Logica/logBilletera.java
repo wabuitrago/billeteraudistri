@@ -216,9 +216,9 @@ public class logBilletera {
             registroMovimiento.setTotal(movimiento.getValor());
             registroMovimiento.setNotaMovimiento(movimiento.getNota());
             registroMovimiento.setIdTipoCuenta(movimiento.getIdCuenta());
+            registroMovimiento.setIdCategoria(movimiento.getIdCategoria());
             registroMovimiento.setNombreCuenta(movimiento.getNombreCuenta());
-            registroMovimiento.setIdCuenta(movimiento.getIdCategoria());
-            registroMovimiento.setNombreCuenta(movimiento.getNombreCategoria());
+            registroMovimiento.setNombreCategoria(movimiento.getNombreCategoria());
             //se agrega al array el registro
             billeteraMovimiento.add(registroMovimiento);
         }

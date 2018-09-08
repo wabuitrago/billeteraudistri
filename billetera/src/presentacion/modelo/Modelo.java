@@ -228,9 +228,10 @@ public class Modelo {
         java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
         
 // Aca defino seria el espacio para el set de las fechas a la logica
-        System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaInicio);        
+        System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaFin);        
         
-//Aca lamaria a la funcion de Logica de la consuta        
+//Aca lamaria a la funcion de Logica de la consuta 
+        List<logBilletera> billeteraConsultar = new logBilletera().consultarMovimientos();
 //***********************
 
 //como no tengo la consulta de logica creo estos valores de prueba
@@ -258,11 +259,11 @@ public class Modelo {
         LResultado.add("Ingreso");
 ////////////////////////////////////////////
 //Llamo la funcion para llenar la tabla de consulta
-        llenarTabla(vistaReportes.getTblresultadoreport(), LResultado);
+        llenarTabla(vistaReportes.getTblresultadoreport(), billeteraConsultar);
 
     }
 
-    public void llenarTabla(JTable tablaR, List<String> resultado){
+    public void llenarTabla(JTable tablaR, List<logBilletera> resultado){
         DefaultTableModel modelot = new DefaultTableModel();
         tablaR.setModel(modelot);
         
@@ -271,19 +272,19 @@ public class Modelo {
         modelot.addColumn("Cuenta");
         modelot.addColumn("Tipo Movimiento");
         
+        System.out.println("resultado lista movimientos: "+ resultado.size());        
+        
         Object[] columna = new Object[4];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
-        int colum=0;
-        
+                
         for (int i = 0; i < numRegistros; i++) {
-            columna[colum] = resultado.get(i);//aca debe ir el get del resulado
-            colum++;
-            if (colum==4) {
+            System.out.println("resultado lista movimientos: "+ resultado.get(i).getNombreCategoria());        
+            columna[0] = resultado.get(i).getFechaIniMovimiento();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreCategoria();
+            columna[2] = resultado.get(i).getNombreCuenta();
+            columna[3] = resultado.get(i).getNombreTipoMovimiento();
             modelot.addRow(columna);
-            colum=0;
-            }
-            
         }
     }
     

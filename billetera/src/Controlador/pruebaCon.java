@@ -22,7 +22,7 @@ public class pruebaCon {
         Logica.logBilletera billetera = new logBilletera();
         List<logBilletera> billeteraCuenta = null;
         
-        billeteraCuenta = billetera.consultarCuentas();
+        billeteraCuenta = billetera.consultarMovimientos();
         
         Iterator<logBilletera> it = billeteraCuenta.iterator();
         System.out.println("La lista inicial contiene los siguientes datos");

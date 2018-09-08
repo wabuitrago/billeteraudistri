@@ -8,6 +8,7 @@ package Sistema.DAO;
 import Sistema.Interfaces.CRUD;
 import Sistema.Conexion.Conexion;
 import Sistema.DTO.movimiento;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,14 +26,14 @@ public class movimientoDAO implements CRUD<movimiento>{
     private static final String SQL_INSERT = "INSERT INTO movimiento(fechaMovimiento, valor, nota, idCuenta, idCategoria) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM movimiento WHERE idMovimiento = ?";
     private static final String SQL_UPDATE = "UPDATE movimiento SET fechaMovimiento = ?, valor = ?, nota = ?, idCuenta = ?, idCategoria = ? WHERE idMovimiento = ?";
-    private static final String SQL_READ = "SELECT idMovimiento, fechaMovimiento, valor, nota, idCuenta, idCategoria, c.nombreCuenta, ca.nombreCategoria\n" +
-            "FROM movimiento m \n" +
-            "inner join cuenta c on c.idCuenta=m.idCuenta \n" +
+    private static final String SQL_READ = "SELECT idMovimiento, fechaMovimiento, valor, nota, c.idCuenta, ca.idCategoria, c.nombreCuenta, ca.nombreCategoria" +
+            "FROM movimiento m " +
+            "inner join cuenta c on c.idCuenta=m.idCuenta " +
             "inner join categoria ca on ca.idCategoria=m.idCategoria WHERE idMovimiento = ?";
-    private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, idCuenta, idCategoria, c.nombreCuenta, ca.nombreCategoria\n" +
-            "FROM movimiento m \n" +
-            "inner join cuenta c on c.idCuenta=m.idCuenta \n" +
-            "inner join categoria ca on ca.idCategoria=m.idCategoria";
+    private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, c.idCuenta, ca.idCategoria, c.nombreCuenta, ca.nombreCategoria "
+            + "FROM movimiento m "
+            + "inner join cuenta as c on c.idCuenta=m.idCuenta "
+            + "inner join categoria as ca on ca.idCategoria=m.idCategoria";
     
     private static final Conexion cn = Conexion.conectarse();
     
@@ -136,7 +137,7 @@ public class movimientoDAO implements CRUD<movimiento>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                movimientos.add(new movimiento(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+                movimientos.add(new movimiento(rs.getInt(1), Date.valueOf(rs.getString(2)), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
             }
             
         } catch (SQLException ex) {
