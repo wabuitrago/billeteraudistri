@@ -191,7 +191,7 @@ public class Modelo {
             numtipo=2;
         }
         getLogica().setNombreCategoria(nombreCategoria);
-        getLogica().setTipoMovimiento(numtipo);
+        getLogica().setIdTipoMovimiento(numtipo);
         
         resultado=getLogica().crearCategoria();
         
