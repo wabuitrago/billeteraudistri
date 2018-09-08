@@ -135,7 +135,6 @@ public class logBilletera {
             cuenta cuenta = iteradorCuentas.next();
             //se inicializa un tipo logbilletera para crear los registros
             logBilletera registroCuenta = new logBilletera();
-            //System.out.println("Valor del campo" + iterador.next().getNombreCuenta());
             registroCuenta.setIdCuenta(cuenta.getIdCuenta());
             registroCuenta.setNombreCuenta(cuenta.getNombreCuenta());
             registroCuenta.setIdTipoCuenta(cuenta.getIdTipoCuenta());
@@ -174,7 +173,6 @@ public class logBilletera {
             categoria categoria = iteradorCategorias.next();
             //se inicializa un tipo logbilletera para crear los registros
             logBilletera registroCategoria = new logBilletera();
-            //System.out.println("Valor del campo" + iterador.next().getNombreCuenta());
             registroCategoria.setIdCuenta(categoria.getIdCategoria());
             registroCategoria.setNombreCuenta(categoria.getNombreCategoria());
             registroCategoria.setIdTipoCuenta(categoria.getTipoMovimiento());
@@ -213,7 +211,6 @@ public class logBilletera {
             movimiento movimiento = iteradorMovimientos.next();
             //se inicializa un tipo logbilletera para crear los registros
             logBilletera registroMovimiento = new logBilletera();
-            //System.out.println("Valor del campo" + iterador.next().getNombreCuenta());
             registroMovimiento.setIdMovimiento(movimiento.getIdMovimiento());
             registroMovimiento.setFechaIniMovimiento(movimiento.getFechaMovimiento());
             registroMovimiento.setTotal(movimiento.getValor());
