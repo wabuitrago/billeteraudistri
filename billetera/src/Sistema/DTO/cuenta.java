@@ -32,6 +32,14 @@ public class cuenta {
         this.saldo = saldo;
         this.nombreCuenta = nombreCuenta;
     }
+    
+    public cuenta(int idCuenta, String nombreCuenta, int idTipoCuenta, int documento, int saldo) {
+        this.idCuenta = idCuenta;
+        this.nombreCuenta = nombreCuenta;
+        this.idTipoCuenta = idTipoCuenta;
+        this.documento = documento;
+        this.saldo = saldo;
+    }
 
     public int getDocumento() {
         return documento;

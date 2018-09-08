@@ -25,8 +25,8 @@ public class categoriaDAO implements CRUD<categoria>{
     private static final String SQL_INSERT = "INSERT INTO categoria (nombreCategoria, tipoMovimiento) values (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM categoria WHERE idCategoria = ?";
     private static final String SQL_UPDATE = "UPDATE categoria SET nombreCategoria = ?, tipoMovimiento = ? WHERE idCategoria = ?";
-    private static final String SQL_READ = "SELECT idCategoria, nombreCategoria, tipoMovimiento FROM categoria WHERE idCategoria = ? ";
-    private static final String SQL_READALL = "SELECT idCategoria, nombreCategoria, tipoMovimiento FROM categoria";
+    private static final String SQL_READ = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoriaWHERE idCategoria = ? ";
+    private static final String SQL_READALL = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoria";
     
     private static final Conexion cn = Conexion.conectarse();
     
@@ -101,7 +101,7 @@ public class categoriaDAO implements CRUD<categoria>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                cat.add(new categoria(rs.getInt(1), rs.getString(2), rs.getInt(3)));
+                cat.add(new categoria(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
             }
             
         } catch (SQLException ex) {
@@ -124,7 +124,7 @@ public class categoriaDAO implements CRUD<categoria>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                categorias.add(new categoria(rs.getInt(1), rs.getString(2), rs.getInt(3)));
+                categorias.add(new categoria(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
             }
             
         } catch (SQLException ex) {

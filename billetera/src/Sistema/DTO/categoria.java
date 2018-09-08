@@ -13,6 +13,7 @@ public class categoria {
     private int idCategoria;
     private String nombreCategoria;
     private int tipoMovimiento;
+    private String nombreTipoMovimiento;
 
     public categoria() {
     }
@@ -27,6 +28,13 @@ public class categoria {
         this.tipoMovimiento = tipoMovimiento;
     }
 
+    public categoria(int idCategoria, String nombreCategoria, int tipoMovimiento, String nombreMovimiento) {
+        this.idCategoria = idCategoria;
+        this.nombreCategoria = nombreCategoria;
+        this.tipoMovimiento = tipoMovimiento;
+        this.nombreTipoMovimiento = nombreMovimiento;
+    }
+    
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -50,6 +58,14 @@ public class categoria {
     public void setTipoMovimiento(int tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
     }
+
+    public String getNombreTipoMovimiento() {
+        return nombreTipoMovimiento;
+    }
+
+    public void setNombreTipoMovimiento(String nombreTipoMovimiento) {
+        this.nombreTipoMovimiento = nombreTipoMovimiento;
+    }
     
-    
+       
 }

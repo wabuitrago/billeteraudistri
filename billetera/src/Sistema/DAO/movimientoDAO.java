@@ -25,8 +25,14 @@ public class movimientoDAO implements CRUD<movimiento>{
     private static final String SQL_INSERT = "INSERT INTO movimiento(fechaMovimiento, valor, nota, idCuenta, idCategoria) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM movimiento WHERE idMovimiento = ?";
     private static final String SQL_UPDATE = "UPDATE movimiento SET fechaMovimiento = ?, valor = ?, nota = ?, idCuenta = ?, idCategoria = ? WHERE idMovimiento = ?";
-    private static final String SQL_READ = "SELECT idMovimiento, fechaMovimiento, valor, nota, idCuenta, idCategoria FROM movimiento WHERE idMovimiento = ?";
-    private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, idCuenta, idCategoria FROM movimiento";
+    private static final String SQL_READ = "SELECT idMovimiento, fechaMovimiento, valor, nota, idCuenta, idCategoria, c.nombreCuenta, ca.nombreCategoria\n" +
+            "FROM movimiento m \n" +
+            "inner join cuenta c on c.idCuenta=m.idCuenta \n" +
+            "inner join categoria ca on ca.idCategoria=m.idCategoria WHERE idMovimiento = ?";
+    private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, idCuenta, idCategoria, c.nombreCuenta, ca.nombreCategoria\n" +
+            "FROM movimiento m \n" +
+            "inner join cuenta c on c.idCuenta=m.idCuenta \n" +
+            "inner join categoria ca on ca.idCategoria=m.idCategoria";
     
     private static final Conexion cn = Conexion.conectarse();
     

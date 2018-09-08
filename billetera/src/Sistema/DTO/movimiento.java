@@ -18,6 +18,8 @@ public class movimiento {
     private String nota;
     private int idCuenta;
     private int idCategoria;
+    private String nombreCuenta;
+    private String nombreCategoria;
 
     public movimiento() {
     }
@@ -35,6 +37,17 @@ public class movimiento {
         this.idCategoria = idCategoria;
     }
 
+    public movimiento(int idMovimiento, Date fechaMovimiento, int valor, String nota, int idCuenta, int idCategoria, String nombreCuenta, String nombreCategoria) {
+        this.idMovimiento = idMovimiento;
+        this.fechaMovimiento = fechaMovimiento;
+        this.valor = valor;
+        this.nota = nota;
+        this.idCuenta = idCuenta;
+        this.idCategoria = idCategoria;
+        this.nombreCategoria = nombreCategoria;
+        this.nombreCuenta = nombreCuenta;
+    }
+    
     public Date getFechaMovimiento() {
         return fechaMovimiento;
     }
@@ -82,7 +95,21 @@ public class movimiento {
     public void setValor(int valor) {
         this.valor = valor;
     }
-    
-    
-    
+
+    public String getNombreCuenta() {
+        return nombreCuenta;
+    }
+
+    public void setNombreCuenta(String nombreCuenta) {
+        this.nombreCuenta = nombreCuenta;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+           
 }
