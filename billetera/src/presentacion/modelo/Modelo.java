@@ -9,6 +9,14 @@ package presentacion.modelo;
 import presentacion.vista.vistaPrincipal;
 import presentacion.vista.vistaCategorias;
 import Logica.logBilletera;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.print.DocFlavor;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import presentacion.vista.vistaReportes;
 
 public class Modelo {
 
@@ -16,6 +24,7 @@ public class Modelo {
     //private Billetera sistema;
     private vistaPrincipal vistaPrincipal;
     private vistaCategorias vistaCategoria;
+    private vistaReportes vistaReportes;
     private logBilletera Logica;
 
 //metodo de la vista principal
@@ -31,6 +40,12 @@ public class Modelo {
         }
         return vistaCategoria;
     }
+     public vistaReportes getVistaReportes(){
+         if(vistaReportes == null){
+            vistaReportes = new vistaReportes(this);
+        }
+        return vistaReportes;         
+     }
         public logBilletera getLogica() {
         if(Logica == null){
             Logica = new logBilletera();
@@ -70,6 +85,8 @@ public class Modelo {
 	//para la vista Reportes
 	public void funcionVistaReporte(){
 	//Muchas cosas para crear la vista        
+           getVistaReportes().setVisible(true);
+           getVistaPrincipal().setVisible(false);          
     }	
 
 ///funciones para la vista de Cuentas    
@@ -183,5 +200,77 @@ public class Modelo {
         else
             System.out.println("Error al crear categoria: "+nombreCategoria+" - "+numtipo);
     }
+    
+    public void funcionReportfechas(){
+	//String FechaInicio, FechaFin;
+        Date date1, date2;
+
+//conversion de fechas al modelo de sql   
+        date1 = getVistaReportes().getJdcfechainicial().getDate();
+        java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
+        date2 = getVistaReportes().getJdcfechafinal().getDate();
+        java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+        
+// Aca defino seria el espacio para el set de las fechas a la logica
+        System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaInicio);        
+        
+//Aca lamaria a la funcion de Logica de la consuta        
+//***********************
+
+//como no tengo la consulta de logica creo estos valores de prueba
+//valores de prueba
+        List<String> LResultado=new ArrayList<String>();
+        LResultado.add("01/08/2017");
+        LResultado.add("Banco");
+        LResultado.add("bolsillo");
+        LResultado.add("Ingreso");
+        LResultado.add("01/09/2018");
+        LResultado.add("Tersoreria");
+        LResultado.add("tajeta debito");
+        LResultado.add("Ingreso");
+        LResultado.add("12/08/2019");
+        LResultado.add("familia");
+        LResultado.add("ahorros");
+        LResultado.add("Egreso");
+        LResultado.add("01/12/2020");
+        LResultado.add("universidad");
+        LResultado.add("bolsillo");
+        LResultado.add("Egreso");
+        LResultado.add("01/01/2022");
+        LResultado.add("mercado");
+        LResultado.add("tarjeta debito");
+        LResultado.add("Ingreso");
+////////////////////////////////////////////
+//Llamo la funcion para llenar la tabla de consulta
+        llenarTabla(vistaReportes.getTblresultadoreport(), LResultado);
+
+    }
+
+    public void llenarTabla(JTable tablaR, List<String> resultado){
+        DefaultTableModel modelot = new DefaultTableModel();
+        tablaR.setModel(modelot);
+        
+        modelot.addColumn("Fecha");
+        modelot.addColumn("Categoria");
+        modelot.addColumn("Cuenta");
+        modelot.addColumn("Tipo Movimiento");
+        
+        Object[] columna = new Object[4];
+        
+        int numRegistros= resultado.size();//hasta el size de la lista resultado 
+        int colum=0;
+        
+        for (int i = 0; i < numRegistros; i++) {
+            columna[colum] = resultado.get(i);//aca debe ir el get del resulado
+            colum++;
+            if (colum==4) {
+            modelot.addRow(columna);
+            colum=0;
+            }
+            
+        }
+    }
+    
+    
 	
     }

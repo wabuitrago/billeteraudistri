@@ -24,7 +24,10 @@ public class Conexion {
     
     private Conexion(){
         try {
-            cnn = DriverManager.getConnection("jdbc:sqlite:C:/Users/William/Documents/universidad/1 Semestre/billetera.db"); //conexion
+            //ubicacion William
+            //cnn = DriverManager.getConnection("jdbc:sqlite:C:/Users/William/Documents/universidad/1 Semestre/billetera.db"); //conexion
+            //ubicacion BD Camilo
+            cnn = DriverManager.getConnection("jdbc:sqlite:/home/camilo/NetBeansProjects/BD/billetera.db"); //conexion
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
