@@ -199,6 +199,22 @@ public class Modelo {
             System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
         else
             System.out.println("Error al crear categoria: "+nombreCategoria+" - "+numtipo);
+
+//llamo a la funcion de consulta de las categorias
+//datos prueba categoria
+        List<String> LResultadocat=new ArrayList<String>();
+        LResultadocat.add("impuesto");
+        LResultadocat.add("ingreso");
+        LResultadocat.add("Banco");
+        LResultadocat.add("Egreso");
+        LResultadocat.add("ventas");
+        LResultadocat.add("Ingreso");
+        LResultadocat.add("Mercado");
+        LResultadocat.add("Egreso");        
+////////////////////////////////////////////
+//Llamo la funcion para llenar la tabla de categorias
+        ConsultaCat(vistaCategoria.getTblcatconsulta(),LResultadocat);
+
     }
     
     public void funcionReportfechas(){
@@ -270,6 +286,29 @@ public class Modelo {
             
         }
     }
+    
+    public void ConsultaCat(JTable tablaR, List<String> resultado){
+        DefaultTableModel modelot = new DefaultTableModel();
+        tablaR.setModel(modelot);
+        
+        modelot.addColumn("Nombre Categoria");
+        modelot.addColumn("Tipo Movimiento");
+        
+        Object[] columna = new Object[2];
+        
+        int numRegistros= resultado.size();//hasta el size de la lista resultado 
+        int colum=0;
+        
+        for (int i = 0; i < numRegistros; i++) {
+            columna[colum] = resultado.get(i);//aca debe ir el get del resulado
+            colum++;
+            if (colum==2) {
+            modelot.addRow(columna);
+            colum=0;
+            }
+            
+        }
+    }    
     
     
 	

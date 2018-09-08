@@ -97,13 +97,13 @@ public class vistaReportes extends javax.swing.JFrame {
 
         Tblresultadoreport.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Cuenta", "Categoria", "Saldo", "Tipo Movimiento", "Destino"
+                "Fecha", "Categoria", "Cuenta", "Tipo Movimiento"
             }
         ));
         jScrollPane1.setViewportView(Tblresultadoreport);
