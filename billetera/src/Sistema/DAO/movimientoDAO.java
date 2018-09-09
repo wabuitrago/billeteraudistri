@@ -35,7 +35,7 @@ public class movimientoDAO implements CRUD<movimiento>{
     private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, c.idCuenta, ca.idCategoria, c.nombreCuenta, ca.nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento  "
             + "FROM movimiento m "
             + "inner join cuenta as c on c.idCuenta=m.idCuenta "
-            + "inner join categoria as ca on ca.idCategoria=m.idCategoria";
+            + "inner join categoria as ca on ca.idCategoria=m.idCategoria ?";
     private static final String SQL_GROUPBYTIPOMOVIMIENTO = "SELECT tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento, sum(valor) total FROM movimiento as m " +
             " inner join categoria as ca on ca.idCategoria=m.idCategoria ? " +
             " group by tipoMovimiento;";
@@ -140,8 +140,8 @@ public class movimientoDAO implements CRUD<movimiento>{
         ArrayList<movimiento> movimientos = new ArrayList();
         
         try {
-                        
-            ps = cn.getCnn().prepareStatement(SQL_READALL);
+            String consulta = SQL_READALL.replace("?", this.filtro);
+            ps = cn.getCnn().prepareStatement(consulta);
             
             rs = ps.executeQuery();
             
