@@ -22,7 +22,35 @@ public class ControladorReportes implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ventanaReportes.getModelo().funcionReportfechas();
+        if (e.getSource()==ventanaReportes.getBtnGenerarReport()) {
+            if (ventanaReportes.getRbnFechas().isSelected()) {
+                ventanaReportes.getModelo().funcionReportfechas();    
+            }else if (ventanaReportes.getRbnCategorias().isSelected()) {
+                ventanaReportes.getModelo().funcionReportfechas();    
+            }else if (ventanaReportes.getRbningvsegreso().isSelected()) {
+                ventanaReportes.getModelo().funcionReportfechas();    
+            }
+        }
+        if (e.getSource()==ventanaReportes.getBtnexportar()) {
+        //ventanaReportes.getModelo().funcionReportfechas();    
+        } 
+        if (e.getSource()==ventanaReportes.getBtngraficar()) {
+            int tipoconsulta=1;
+            if (ventanaReportes.getRbnFechas().isSelected()) {
+                tipoconsulta=1;
+            }else if (ventanaReportes.getRbnCategorias().isSelected()) {
+                tipoconsulta=2;
+            }else if (ventanaReportes.getRbningvsegreso().isSelected()) {
+                tipoconsulta=3;
+            }            
+            ventanaReportes.getModelo().ReportGraficar(tipoconsulta);
+        }
+        if (e.getSource()==ventanaReportes.getBtnregresar()) {
+        ventanaReportes.getModelo().funcionVistaRegresar();
+        }
+        
+        
+        
     }    
     
         

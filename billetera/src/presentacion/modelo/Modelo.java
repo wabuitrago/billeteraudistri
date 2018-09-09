@@ -9,13 +9,20 @@ package presentacion.modelo;
 import presentacion.vista.vistaPrincipal;
 import presentacion.vista.vistaCategorias;
 import Logica.logBilletera;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.print.DocFlavor;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 import presentacion.vista.vistaReportes;
 
@@ -118,74 +125,8 @@ public class Modelo {
     public void funcionCuentasVisualizar(){
 	//Muchas cosas para crear la vista        
     }		
-	
-//Funciones Ingresos
 
-	//crear
-    public void funcionIngresoCrear(){
-	//Muchas cosas para crear la vista      
-        
-        
-    }		
-
-	//consultar
-    public void funcionIngresoConsultar(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//editar
-    public void funcionIngresoEditar(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//visualizar
-    public void funcionIngresoVisual(){
-	//Muchas cosas para crear la vista        
-    }		
-
-//Funciones Egresos
-
-	//crear
-    public void funcionEgresoCrear(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//consultar
-    public void funcionEgresoConsultar(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//editar
-    public void funcionEgresoEditar(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//visualizar
-    public void funcionEgresoVisual(){
-	//Muchas cosas para crear la vista        
-    }			
-
-//Funciones Traslas
-
-	//crear
-    public void funcionTraslaCrear(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//consultar
-    public void funcionTraslaConsultar(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//editar
-    public void funcionTraslaEditar(){
-	//Muchas cosas para crear la vista        
-    }		
-
-	//visualizar
-    public void funcionTraslaVisual(){
-	//Muchas cosas para crear la vista        
-    }				
+			
     public void funcionCatCrear(){
 	String nombreCategoria, tipo;
         int numtipo;
@@ -211,18 +152,6 @@ public class Modelo {
 
 //llamo a la funcion de consulta de las categorias
     List<logBilletera> billeteraConsultarCat = new logBilletera().consultarCategorias();
-//datos prueba categoria
-/*
-        List<String> LResultadocat=new ArrayList<String>();
-        LResultadocat.add("impuesto");
-        LResultadocat.add("ingreso");
-        LResultadocat.add("Banco");
-        LResultadocat.add("Egreso");
-        LResultadocat.add("ventas");
-        LResultadocat.add("Ingreso");
-        LResultadocat.add("Mercado");
-        LResultadocat.add("Egreso");        */
-////////////////////////////////////////////
 //Llamo la funcion para llenar la tabla de categorias
         ConsultaCat(vistaCategoria.getTblcatconsulta(),billeteraConsultarCat);
 
@@ -273,48 +202,32 @@ public class Modelo {
         Date date1, date2;
 
 //conversion de fechas al modelo de sql   
-        date1 = getVistaReportes().getJdcfechainicial().getDate();
-        java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
-        date2 = getVistaReportes().getJdcfechafinal().getDate();
-        java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+        try {
+            date1 = getVistaReportes().getJdcfechainicial().getDate();
+            java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
+            date2 = getVistaReportes().getJdcfechafinal().getDate();
+            java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+            
+            System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaFin);        
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vistaReportes, "Debe indicar las fechas de consulta");
+        }
         
-// Aca defino seria el espacio para el set de las fechas a la logica
-        System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaFin);        
-        
-//Aca llamaria a la funcion de Logica de la consuta 
+//Aca llamo a la funcion de Logica de la consuta 
         List<logBilletera> billeteraConsultar = new logBilletera().consultarMovimientos(1);
-        System.out.println("resultado 1:"+billeteraConsultar);
-//***********************
-
-//como no tengo la consulta de logica creo estos valores de prueba
-//valores de prueba
-/*        List<String> LResultado=new ArrayList<String>();
-        LResultado.add("01/08/2017");
-        LResultado.add("Banco");
-        LResultado.add("bolsillo");
-        LResultado.add("Ingreso");
-        LResultado.add("01/09/2018");
-        LResultado.add("Tersoreria");
-        LResultado.add("tajeta debito");
-        LResultado.add("Ingreso");
-        LResultado.add("12/08/2019");
-        LResultado.add("familia");
-        LResultado.add("ahorros");
-        LResultado.add("Egreso");
-        LResultado.add("01/12/2020");
-        LResultado.add("universidad");
-        LResultado.add("bolsillo");
-        LResultado.add("Egreso");
-        LResultado.add("01/01/2022");
-        LResultado.add("mercado");
-        LResultado.add("tarjeta debito");
-        LResultado.add("Ingreso");*/
-////////////////////////////////////////////
 //Llamo la funcion para llenar la tabla de consulta
         llenarTabla(vistaReportes.getTblresultadoreport(), billeteraConsultar);
-
+    }
+    
+    public void funcionReportCat(){
+        
     }
 
+    public void funcionReportIngVSEgre(){
+        
+    }    
+    
     public void llenarTabla(JTable tablaR, List<logBilletera> resultado){
         DefaultTableModel modelot = new DefaultTableModel();
         tablaR.setModel(modelot);
@@ -363,6 +276,57 @@ public class Modelo {
 
     }    
     
-    
+    public void ReportGraficar(int tipoconsulta){
+        Logica.logBilletera billetera = new logBilletera();
+        List<logBilletera> billeteraCuenta = null;
+        
+        
+        switch (tipoconsulta) {
+            case 1:
+                billeteraCuenta = billetera.consultarMovimientos(1);
+                DefaultPieDataset data = new DefaultPieDataset();
+                Iterator<logBilletera> it = billeteraCuenta.iterator();                
+                while(it.hasNext()){
+                    //ya que es un array nos toca optener los valores de  cada registro
+                    logBilletera movimiento = it.next();
+                    data.setValue(movimiento.getNombreCategoria(), movimiento.getTotal());
+                }       // Creando el Grafico
+                JFreeChart chartF = ChartFactory.createPieChart(
+                        "Movimientos por fechas",
+                        data,
+                        true,
+                        true,
+                        false);// Mostrar Grafico
+                ChartFrame frameFecha = new ChartFrame("JFreeChart", chartF);
+                frameFecha.pack();
+                frameFecha.setVisible(true);
+                break;
+            case 2:
+                billeteraCuenta = billetera.consultarMovimientos(2);                
+                DefaultPieDataset data2 = new DefaultPieDataset();
+                Iterator<logBilletera> it2 = billeteraCuenta.iterator();                
+                while(it2.hasNext()){
+                    //ya que es un array nos toca optener los valores de  cada registro
+                    logBilletera movimiento = it2.next();
+                    data2.setValue(movimiento.getNombreCategoria(), movimiento.getTotal());
+                }       // Creando el Grafico
+                JFreeChart chartCat = ChartFactory.createPieChart(
+                        "Movimientos por Categorias",
+                        data2,
+                        true,
+                        true,
+                        false);// Mostrar Grafico
+                ChartFrame frameCat = new ChartFrame("JFreeChart", chartCat);
+                frameCat.pack();
+                frameCat.setVisible(true);
+                break;
+            default:
+                System.out.println("Grafica para ingreso vs egresos");
+                break;
+        }
+
+
+        
+    }       
 	
     }
