@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.print.DocFlavor;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -87,7 +88,14 @@ public class Modelo {
 	//Muchas cosas para crear la vista        
            getVistaReportes().setVisible(true);
            getVistaPrincipal().setVisible(false);          
-    }	
+        }	
+
+        public void funcionVistaRegresar(){
+	//Muchas cosas para crear la vista        
+           getVistaReportes().setVisible(false);
+           getVistaPrincipal().setVisible(true);          
+           getVistaCategorias().setVisible(false);                     
+        }	        
 
 ///funciones para la vista de Cuentas    
 
@@ -185,7 +193,7 @@ public class Modelo {
         
         nombreCategoria=getVistaCategorias().getTxtNombreCat().getText();
         tipo=getVistaCategorias().getCbTipoCat().getSelectedItem().toString();
-        if (tipo.equals("Ingreso")) {
+        if (tipo.equals("INGRESO")) {
             numtipo=1;
         }else{
             numtipo=2;
@@ -196,12 +204,15 @@ public class Modelo {
         resultado=getLogica().crearCategoria();
         
         if(resultado)
-            System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
+            //System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
+            JOptionPane.showMessageDialog(vistaCategoria, "Categoria creada exitosamente");
         else
-            System.out.println("Error al crear categoria: "+nombreCategoria+" - "+numtipo);
+            JOptionPane.showMessageDialog(vistaCategoria, "Error al crear categoria: "+nombreCategoria+" - "+numtipo);
 
 //llamo a la funcion de consulta de las categorias
+    List<logBilletera> billeteraConsultarCat = new logBilletera().consultarCategorias();
 //datos prueba categoria
+/*
         List<String> LResultadocat=new ArrayList<String>();
         LResultadocat.add("impuesto");
         LResultadocat.add("ingreso");
@@ -210,12 +221,52 @@ public class Modelo {
         LResultadocat.add("ventas");
         LResultadocat.add("Ingreso");
         LResultadocat.add("Mercado");
-        LResultadocat.add("Egreso");        
+        LResultadocat.add("Egreso");        */
 ////////////////////////////////////////////
 //Llamo la funcion para llenar la tabla de categorias
-        ConsultaCat(vistaCategoria.getTblcatconsulta(),LResultadocat);
+        ConsultaCat(vistaCategoria.getTblcatconsulta(),billeteraConsultarCat);
 
     }
+    
+    public void funcionCatEditar(int id){
+	String nombreCategoria, tipo;
+        int numtipo;
+        Boolean resultado;
+        
+        nombreCategoria=getVistaCategorias().getTxtNombreCat().getText();
+        tipo=getVistaCategorias().getCbTipoCat().getSelectedItem().toString();
+        
+        if (tipo.equals("INGRESO")) {
+            numtipo=1;
+        }else{
+            numtipo=2;
+        }
+        
+        getLogica().setIdCategoria(id);
+        getLogica().setNombreCategoria(nombreCategoria);
+        getLogica().setIdTipoMovimiento(numtipo);
+        
+        resultado=getLogica().actualizarCategoria();
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(vistaCategoria, "Categoria editada exitosamente");
+            getVistaCategorias().getTxtNombreCat().setText("");
+        }else{
+            JOptionPane.showMessageDialog(vistaCategoria, "Error al editar la categoria: "+nombreCategoria+" - "+numtipo);
+        }
+//llamo a la funcion de consulta de las categorias
+    List<logBilletera> billeteraConsultarCat = new logBilletera().consultarCategorias();
+//Llamo la funcion para llenar la tabla de categorias
+        ConsultaCat(vistaCategoria.getTblcatconsulta(),billeteraConsultarCat);
+        
+    }
+    
+    public void funcionConsultarCat(){
+//llamo a la funcion de consulta de las categorias
+        List<logBilletera> billeteraConsultarCat = new logBilletera().consultarCategorias();
+        ConsultaCat(vistaCategoria.getTblcatconsulta(),billeteraConsultarCat);
+    }
+            
     
     public void funcionReportfechas(){
 	//String FechaInicio, FechaFin;
@@ -230,13 +281,14 @@ public class Modelo {
 // Aca defino seria el espacio para el set de las fechas a la logica
         System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaFin);        
         
-//Aca lamaria a la funcion de Logica de la consuta 
+//Aca llamaria a la funcion de Logica de la consuta 
         List<logBilletera> billeteraConsultar = new logBilletera().consultarMovimientos(1);
+        System.out.println("resultado 1:"+billeteraConsultar);
 //***********************
 
 //como no tengo la consulta de logica creo estos valores de prueba
 //valores de prueba
-        List<String> LResultado=new ArrayList<String>();
+/*        List<String> LResultado=new ArrayList<String>();
         LResultado.add("01/08/2017");
         LResultado.add("Banco");
         LResultado.add("bolsillo");
@@ -256,7 +308,7 @@ public class Modelo {
         LResultado.add("01/01/2022");
         LResultado.add("mercado");
         LResultado.add("tarjeta debito");
-        LResultado.add("Ingreso");
+        LResultado.add("Ingreso");*/
 ////////////////////////////////////////////
 //Llamo la funcion para llenar la tabla de consulta
         llenarTabla(vistaReportes.getTblresultadoreport(), billeteraConsultar);
@@ -288,27 +340,27 @@ public class Modelo {
         }
     }
     
-    public void ConsultaCat(JTable tablaR, List<String> resultado){
+    public void ConsultaCat(JTable tablaR, List<logBilletera> resultado){
         DefaultTableModel modelot = new DefaultTableModel();
         tablaR.setModel(modelot);
         
+        modelot.addColumn("Id");
         modelot.addColumn("Nombre Categoria");
         modelot.addColumn("Tipo Movimiento");
         
-        Object[] columna = new Object[2];
+        
+        Object[] columna = new Object[3];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
-        int colum=0;
-        
+
         for (int i = 0; i < numRegistros; i++) {
-            columna[colum] = resultado.get(i);//aca debe ir el get del resulado
-            colum++;
-            if (colum==2) {
-            modelot.addRow(columna);
-            colum=0;
-            }
+            columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
+            columna[2] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
             
+            modelot.addRow(columna);
         }
+
     }    
     
     
