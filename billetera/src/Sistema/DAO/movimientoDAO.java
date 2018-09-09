@@ -37,11 +37,11 @@ public class movimientoDAO implements CRUD<movimiento>{
             + "inner join cuenta as c on c.idCuenta=m.idCuenta "
             + "inner join categoria as ca on ca.idCategoria=m.idCategoria";
     private static final String SQL_GROUPBYTIPOMOVIMIENTO = "SELECT tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento, sum(valor) total FROM movimiento as m " +
-            " inner join categoria as ca on ca.idCategoria=m.idCategoria " +
+            " inner join categoria as ca on ca.idCategoria=m.idCategoria ? " +
             " group by tipoMovimiento;";
     
     private static final String SQL_GROUPBYCATEGORIA = "SELECT ca.idCategoria, ca.nombreCategoria, sum(valor) total FROM movimiento as m" +
-            " inner join categoria as ca on ca.idCategoria=m.idCategoria" +
+            " inner join categoria as ca on ca.idCategoria=m.idCategoria ? " +
             " group by ca.idCategoria;";
     
     private static final Conexion cn = Conexion.conectarse();
@@ -162,11 +162,14 @@ public class movimientoDAO implements CRUD<movimiento>{
         ArrayList<movimiento> movimientos = new ArrayList();
         
         try {
+            String consulta = "";
             if(this.tipoConsulta == 2){
-                ps = cn.getCnn().prepareStatement(SQL_GROUPBYCATEGORIA);
+                consulta = SQL_GROUPBYCATEGORIA;
             } else{
-                ps = cn.getCnn().prepareStatement(SQL_GROUPBYTIPOMOVIMIENTO);
+                consulta = SQL_GROUPBYTIPOMOVIMIENTO;
             }
+            consulta = consulta.replace("?", this.filtro);
+            ps = cn.getCnn().prepareStatement(consulta);
             rs = ps.executeQuery();
             
             while (rs.next()) {

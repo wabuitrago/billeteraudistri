@@ -28,6 +28,7 @@ public class logBilletera {
     private String nombreTipoCuenta;
     private String notaMovimiento;
     private Date fechaIniMovimiento;
+    private Date fechaFinMovimiento;
 
         
     private int idCuenta;
@@ -200,7 +201,16 @@ public class logBilletera {
             //consulto movimiento
             movimientoDTO = movimientoDao.read(this.idMovimiento);
         } else {
-            //colocamos el tipo de filtro a realizar
+            String WhereMovi = " where 1=1 ";
+            //colocamos las fechas de filtro
+            if(this.fechaIniMovimiento != null){
+                WhereMovi = WhereMovi + " and fechaMovimiento >= '"+this.fechaIniMovimiento+"' ";
+            }
+            if(this.fechaFinMovimiento != null){
+                WhereMovi = WhereMovi + " and fechaMovimiento <= '"+this.fechaFinMovimiento+"' ";
+            }
+            movimientoDao.setFiltro(WhereMovi);
+            //colocamos el tipo de consulta a realizar
             movimientoDao.setTipoConsulta(tipoConsulta);
             //consulto movimientos
             movimientoDTO = movimientoDao.readFilter();
@@ -332,5 +342,14 @@ public class logBilletera {
     public void setIdMovimiento(int idMovimiento) {
         this.idMovimiento = idMovimiento;
     }
+
+    public Date getFechaFinMovimiento() {
+        return fechaFinMovimiento;
+    }
+
+    public void setFechaFinMovimiento(Date fechaFinMovimiento) {
+        this.fechaFinMovimiento = fechaFinMovimiento;
+    }
+
     
 }

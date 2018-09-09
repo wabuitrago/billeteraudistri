@@ -7,6 +7,7 @@ package Controlador;
 
 import Logica.logBilletera;
 import Sistema.DTO.movimiento;
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
@@ -39,6 +40,8 @@ public class pruebaCon {
             data.setValue(movimiento.getNombreTipoMovimiento(), movimiento.getTotal());
         }*/
         
+        billetera.setFechaIniMovimiento(Date.valueOf("2018-09-08"));
+        billetera.setFechaFinMovimiento(Date.valueOf("2018-09-08"));
         billeteraCuenta = billetera.consultarMovimientos(2);
         
         DefaultPieDataset data = new DefaultPieDataset();

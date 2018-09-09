@@ -25,7 +25,7 @@ public class categoriaDAO implements CRUD<categoria>{
     private static final String SQL_INSERT = "INSERT INTO categoria (nombreCategoria, tipoMovimiento) values (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM categoria WHERE idCategoria = ?";
     private static final String SQL_UPDATE = "UPDATE categoria SET nombreCategoria = ?, tipoMovimiento = ? WHERE idCategoria = ?";
-    private static final String SQL_READ = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoriaWHERE idCategoria = ? ";
+    private static final String SQL_READ = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoria WHERE idCategoria = ? ";
     private static final String SQL_READALL = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoria";
     
     private static final Conexion cn = Conexion.conectarse();
