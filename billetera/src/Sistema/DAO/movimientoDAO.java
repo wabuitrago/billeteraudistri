@@ -23,6 +23,8 @@ import java.util.logging.Logger;
  */
 public class movimientoDAO implements CRUD<movimiento>{
 
+    public String filtro = "where 1=1 ";
+    public int tipoConsulta;
     private static final String SQL_INSERT = "INSERT INTO movimiento(fechaMovimiento, valor, nota, idCuenta, idCategoria) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM movimiento WHERE idMovimiento = ?";
     private static final String SQL_UPDATE = "UPDATE movimiento SET fechaMovimiento = ?, valor = ?, nota = ?, idCuenta = ?, idCategoria = ? WHERE idMovimiento = ?";
@@ -30,10 +32,17 @@ public class movimientoDAO implements CRUD<movimiento>{
             "FROM movimiento m " +
             "inner join cuenta c on c.idCuenta=m.idCuenta " +
             "inner join categoria ca on ca.idCategoria=m.idCategoria WHERE idMovimiento = ?";
-    private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, c.idCuenta, ca.idCategoria, c.nombreCuenta, ca.nombreCategoria "
+    private static final String SQL_READALL = "SELECT idMovimiento, fechaMovimiento, valor, nota, c.idCuenta, ca.idCategoria, c.nombreCuenta, ca.nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento  "
             + "FROM movimiento m "
             + "inner join cuenta as c on c.idCuenta=m.idCuenta "
             + "inner join categoria as ca on ca.idCategoria=m.idCategoria";
+    private static final String SQL_GROUPBYTIPOMOVIMIENTO = "SELECT tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento, sum(valor) total FROM movimiento as m " +
+            " inner join categoria as ca on ca.idCategoria=m.idCategoria " +
+            " group by tipoMovimiento;";
+    
+    private static final String SQL_GROUPBYCATEGORIA = "SELECT ca.idCategoria, ca.nombreCategoria, sum(valor) total FROM movimiento as m" +
+            " inner join categoria as ca on ca.idCategoria=m.idCategoria" +
+            " group by ca.idCategoria;";
     
     private static final Conexion cn = Conexion.conectarse();
     
@@ -137,7 +146,7 @@ public class movimientoDAO implements CRUD<movimiento>{
             rs = ps.executeQuery();
             
             while (rs.next()) {
-                movimientos.add(new movimiento(rs.getInt(1), Date.valueOf(rs.getString(2)), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
+                movimientos.add(new movimiento(rs.getInt(1), Date.valueOf(rs.getString(2)), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10)));
             }
             
         } catch (SQLException ex) {
@@ -146,5 +155,63 @@ public class movimientoDAO implements CRUD<movimiento>{
         
         return movimientos;
     }
+    
+    public List<movimiento> readFiltros() {
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<movimiento> movimientos = new ArrayList();
+        
+        try {
+            if(this.tipoConsulta == 2){
+                ps = cn.getCnn().prepareStatement(SQL_GROUPBYCATEGORIA);
+            } else{
+                ps = cn.getCnn().prepareStatement(SQL_GROUPBYTIPOMOVIMIENTO);
+            }
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                if(this.tipoConsulta == 2){
+                    movimientos.add(new movimiento(0, null, rs.getInt(3), null, 0, rs.getInt(1), null, rs.getString(2), 0, null));
+                } else{
+                    movimientos.add(new movimiento(0, null, rs.getInt(3), null, 0, 0, null, null, rs.getInt(1), rs.getString(2)));
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(movimientoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return movimientos;
+    }
+    
+    public List<movimiento> readFilter() {
+        
+        List<movimiento> movimientos = new ArrayList();
+        
+        if(this.tipoConsulta == 1){
+            movimientos = readAll();
+        }else{
+            movimientos = readFiltros();
+        }             
+        
+        return movimientos;
+    }
+
+    public String getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
+    }
+
+    public int getTipoConsulta() {
+        return tipoConsulta;
+    }
+
+    public void setTipoConsulta(int tipoConsulta) {
+        this.tipoConsulta = tipoConsulta;
+    }
+    
     
 }

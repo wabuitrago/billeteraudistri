@@ -65,7 +65,7 @@ public class vistaReportes extends javax.swing.JFrame {
     
   
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("checked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

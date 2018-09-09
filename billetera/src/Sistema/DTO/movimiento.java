@@ -20,6 +20,8 @@ public class movimiento {
     private int idCategoria;
     private String nombreCuenta;
     private String nombreCategoria;
+    private int idTipoMovimiento;
+    private String nombreTipoMovimiento;
 
     public movimiento() {
     }
@@ -37,7 +39,7 @@ public class movimiento {
         this.idCategoria = idCategoria;
     }
 
-    public movimiento(int idMovimiento, Date fechaMovimiento, int valor, String nota, int idCuenta, int idCategoria, String nombreCuenta, String nombreCategoria) {
+    public movimiento(int idMovimiento, Date fechaMovimiento, int valor, String nota, int idCuenta, int idCategoria, String nombreCuenta, String nombreCategoria, int tipoMovimiento, String nomTipoMovimiento) {
         this.idMovimiento = idMovimiento;
         this.fechaMovimiento = fechaMovimiento;
         this.valor = valor;
@@ -46,6 +48,8 @@ public class movimiento {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
         this.nombreCuenta = nombreCuenta;
+        this.idTipoMovimiento = tipoMovimiento;
+        this.nombreTipoMovimiento = nomTipoMovimiento;
     }
     
     public Date getFechaMovimiento() {
@@ -110,6 +114,22 @@ public class movimiento {
 
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
+    }
+
+    public int getIdTipoMovimiento() {
+        return idTipoMovimiento;
+    }
+
+    public void setIdTipoMovimiento(int idTipoMovimiento) {
+        this.idTipoMovimiento = idTipoMovimiento;
+    }
+
+    public String getNombreTipoMovimiento() {
+        return nombreTipoMovimiento;
+    }
+
+    public void setNombreTipoMovimiento(String nombreTipoMovimiento) {
+        this.nombreTipoMovimiento = nombreTipoMovimiento;
     }
            
 }

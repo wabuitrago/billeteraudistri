@@ -188,7 +188,7 @@ public class logBilletera {
     * Si se tiene el id se consulta el registro de lo contrario todos los movimientos
      * @return listado de movimientos
     */
-    public List<logBilletera> consultarMovimientos(){
+    public List<logBilletera> consultarMovimientos(int tipoConsulta){
         //Array de billetera para movimientos consultados
         ArrayList<logBilletera> billeteraMovimiento = new ArrayList();
         //inicializa Dao de movimientos
@@ -200,8 +200,10 @@ public class logBilletera {
             //consulto movimiento
             movimientoDTO = movimientoDao.read(this.idMovimiento);
         } else {
+            //colocamos el tipo de filtro a realizar
+            movimientoDao.setTipoConsulta(tipoConsulta);
             //consulto movimientos
-            movimientoDTO = movimientoDao.readAll();
+            movimientoDTO = movimientoDao.readFilter();
         }
         //tomamos el iterador para recorrer los resultados del DAO
         Iterator<movimiento> iteradorMovimientos = movimientoDTO.listIterator();
@@ -219,6 +221,8 @@ public class logBilletera {
             registroMovimiento.setIdCategoria(movimiento.getIdCategoria());
             registroMovimiento.setNombreCuenta(movimiento.getNombreCuenta());
             registroMovimiento.setNombreCategoria(movimiento.getNombreCategoria());
+            registroMovimiento.setIdTipoMovimiento(movimiento.getIdTipoMovimiento());
+            registroMovimiento.setNombreTipoMovimiento(movimiento.getNombreTipoMovimiento());
             //se agrega al array el registro
             billeteraMovimiento.add(registroMovimiento);
         }

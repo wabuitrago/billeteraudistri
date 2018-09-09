@@ -231,7 +231,7 @@ public class Modelo {
         System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaFin);        
         
 //Aca lamaria a la funcion de Logica de la consuta 
-        List<logBilletera> billeteraConsultar = new logBilletera().consultarMovimientos();
+        List<logBilletera> billeteraConsultar = new logBilletera().consultarMovimientos(1);
 //***********************
 
 //como no tengo la consulta de logica creo estos valores de prueba
