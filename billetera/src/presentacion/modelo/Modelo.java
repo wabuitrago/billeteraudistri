@@ -26,6 +26,18 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import presentacion.vista.vistaReportes;
 
+
+
+import java.io.DataOutputStream;
+ import java.io.File;
+ import java.io.FileOutputStream;
+ import java.util.List;
+ import javax.swing.JTable;
+ import jxl.Workbook;
+ import jxl.write.Label;
+ import jxl.write.WritableSheet;
+ import jxl.write.WritableWorkbook;
+
 public class Modelo {
 
 //Asignacion de variables
@@ -200,32 +212,61 @@ public class Modelo {
     public void funcionReportfechas(){
 	//String FechaInicio, FechaFin;
         Date date1, date2;
-
+        Logica.logBilletera billetera = new logBilletera();
 //conversion de fechas al modelo de sql   
         try {
+//Aca llamo a la funcion de Logica de la consuta 
             date1 = getVistaReportes().getJdcfechainicial().getDate();
             java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
             date2 = getVistaReportes().getJdcfechafinal().getDate();
             java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
             
-            System.out.println("fecha1: "+FechaInicio+" fecha2: "+FechaFin);        
-            
+        billetera.setFechaIniMovimiento(FechaInicio);
+        billetera.setFechaFinMovimiento(FechaFin);        
+    List<logBilletera> billeteraConsultar = billetera.consultarMovimientos(1);
+        
+//Llamo la funcion para llenar la tabla de consulta
+        llenarTabla(vistaReportes.getTblresultadoreport(), billeteraConsultar);            
+                        
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaReportes, "Debe indicar las fechas de consulta");
         }
         
-//Aca llamo a la funcion de Logica de la consuta 
-        List<logBilletera> billeteraConsultar = new logBilletera().consultarMovimientos(1);
-//Llamo la funcion para llenar la tabla de consulta
-        llenarTabla(vistaReportes.getTblresultadoreport(), billeteraConsultar);
+
     }
     
     public void funcionReportCat(){
+    Logica.logBilletera billetera = new logBilletera();        
+    
+    if(getVistaReportes().getJdcfechainicial().getDate() != null && getVistaReportes().getJdcfechafinal().getDate() != null){
+        Date date1, date2;
+        date1 = getVistaReportes().getJdcfechainicial().getDate();
+        java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
+        date2 = getVistaReportes().getJdcfechafinal().getDate();
+        java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+        billetera.setFechaIniMovimiento(FechaInicio);
+        billetera.setFechaFinMovimiento(FechaFin); 
+    }
         
+    List<logBilletera> billeteraConsultar = billetera.consultarMovimientos(2);        
+    ConsultaCat(vistaReportes.getTblresultadoreport(), billeteraConsultar);            
     }
 
     public void funcionReportIngVSEgre(){
+    Logica.logBilletera billetera = new logBilletera();                
+    
+    if(getVistaReportes().getJdcfechainicial().getDate() != null && getVistaReportes().getJdcfechafinal().getDate() != null){
+        Date date1, date2;
+        date1 = getVistaReportes().getJdcfechainicial().getDate();
+        java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
+        date2 = getVistaReportes().getJdcfechafinal().getDate();
+        java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+        billetera.setFechaIniMovimiento(FechaInicio);
+        billetera.setFechaFinMovimiento(FechaFin); 
+    }        
         
+    List<logBilletera> billeteraConsultar = billetera.consultarMovimientos(3);        
+    ConsultaInVSEg(vistaReportes.getTblresultadoreport(), billeteraConsultar);                    
     }    
     
     public void llenarTabla(JTable tablaR, List<logBilletera> resultado){
@@ -257,24 +298,41 @@ public class Modelo {
         DefaultTableModel modelot = new DefaultTableModel();
         tablaR.setModel(modelot);
         
-        modelot.addColumn("Id");
         modelot.addColumn("Nombre Categoria");
-        modelot.addColumn("Tipo Movimiento");
+        modelot.addColumn("Total");
+ 
         
-        
-        Object[] columna = new Object[3];
+        Object[] columna = new Object[2];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
 
         for (int i = 0; i < numRegistros; i++) {
-            columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
-            columna[1] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
-            columna[2] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
-            
+            columna[0] = resultado.get(i).getNombreCategoria();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getTotal();//aca debe ir el get del resulado
+           
             modelot.addRow(columna);
         }
 
     }    
+    
+    public void ConsultaInVSEg (JTable tablaR, List<logBilletera> resultado) {
+        DefaultTableModel modelot = new DefaultTableModel();
+        tablaR.setModel(modelot);
+        
+        modelot.addColumn("Tipo movimiento");
+        modelot.addColumn("Total");
+
+        Object[] columna = new Object[2];
+        
+        int numRegistros= resultado.size();//hasta el size de la lista resultado 
+                
+        for (int i = 0; i < numRegistros; i++) {
+            System.out.println("resultado lista movimientos: "+ resultado.get(i).getNombreCategoria());        
+            columna[0] = resultado.get(i).getNombreTipoMovimiento();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getTotal();
+            modelot.addRow(columna);
+        }        
+    }
     
     public void ReportGraficar(int tipoconsulta){
         Logica.logBilletera billetera = new logBilletera();
@@ -283,26 +341,59 @@ public class Modelo {
         
         switch (tipoconsulta) {
             case 1:
-                billeteraCuenta = billetera.consultarMovimientos(1);
-                DefaultPieDataset data = new DefaultPieDataset();
-                Iterator<logBilletera> it = billeteraCuenta.iterator();                
-                while(it.hasNext()){
-                    //ya que es un array nos toca optener los valores de  cada registro
-                    logBilletera movimiento = it.next();
-                    data.setValue(movimiento.getNombreCategoria(), movimiento.getTotal());
-                }       // Creando el Grafico
-                JFreeChart chartF = ChartFactory.createPieChart(
-                        "Movimientos por fechas",
-                        data,
-                        true,
-                        true,
-                        false);// Mostrar Grafico
-                ChartFrame frameFecha = new ChartFrame("JFreeChart", chartF);
-                frameFecha.pack();
-                frameFecha.setVisible(true);
+                //String FechaInicio, FechaFin;
+                Date date1, date2;
+                Logica.logBilletera billeterafech = new logBilletera();
+        //conversion de fechas al modelo de sql   
+                try {
+        //Aca llamo a la funcion de Logica de la consuta 
+                    date1 = getVistaReportes().getJdcfechainicial().getDate();
+                    java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
+                    date2 = getVistaReportes().getJdcfechafinal().getDate();
+                    java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+
+                billeterafech.setFechaIniMovimiento(FechaInicio);
+                billeterafech.setFechaFinMovimiento(FechaFin);        
+
+
+                        billeteraCuenta = billeterafech.consultarMovimientos(1);
+                        DefaultPieDataset dataf= new DefaultPieDataset();
+                        Iterator<logBilletera> it = billeteraCuenta.iterator();                
+                        while(it.hasNext()){
+                            //ya que es un array nos toca optener los valores de  cada registro
+                            logBilletera movimiento = it.next();
+                            //dataf.setValue(movimiento.getFechaIniMovimiento(), movimiento.getNombreCategoria(), movimiento.getNombreCuenta(), movimiento.getNombreTipoMovimiento());
+                            dataf.setValue(movimiento.getFechaIniMovimiento(), movimiento.getTotal());
+                        }       // Creando el Grafico
+                        JFreeChart chartF = ChartFactory.createPieChart(
+                                "Movimientos por fechas",
+                                dataf,
+                                true,
+                                true,
+                                false);// Mostrar Grafico
+                        ChartFrame frameFecha = new ChartFrame("JFreeChart", chartF);
+                        frameFecha.pack();
+                        frameFecha.setVisible(true);
+
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Debe indicar las fechas de consulta");
+                }
+
                 break;
             case 2:
-                billeteraCuenta = billetera.consultarMovimientos(2);                
+                Logica.logBilletera billeteracat = new logBilletera();        
+
+                if(getVistaReportes().getJdcfechainicial().getDate() != null && getVistaReportes().getJdcfechafinal().getDate() != null){
+                    Date datec1, datec2;
+                    datec1 = getVistaReportes().getJdcfechainicial().getDate();
+                    java.sql.Date FechaInicio = new java.sql.Date(datec1.getTime());
+                    datec2 = getVistaReportes().getJdcfechafinal().getDate();
+                    java.sql.Date FechaFin = new java.sql.Date(datec2.getTime());
+                    billeteracat.setFechaIniMovimiento(FechaInicio);
+                    billeteracat.setFechaFinMovimiento(FechaFin); 
+                }                
+                billeteraCuenta = billeteracat.consultarMovimientos(2);                
                 DefaultPieDataset data2 = new DefaultPieDataset();
                 Iterator<logBilletera> it2 = billeteraCuenta.iterator();                
                 while(it2.hasNext()){
@@ -321,12 +412,42 @@ public class Modelo {
                 frameCat.setVisible(true);
                 break;
             default:
-                System.out.println("Grafica para ingreso vs egresos");
+                Logica.logBilletera billeteraIE = new logBilletera();                
+
+                if(getVistaReportes().getJdcfechainicial().getDate() != null && getVistaReportes().getJdcfechafinal().getDate() != null){
+                    Date dateie1, dateie2;
+                    dateie1 = getVistaReportes().getJdcfechainicial().getDate();
+                    java.sql.Date FechaInicio = new java.sql.Date(dateie1.getTime());
+                    dateie2 = getVistaReportes().getJdcfechafinal().getDate();
+                    java.sql.Date FechaFin = new java.sql.Date(dateie2.getTime());
+                    billeteraIE.setFechaIniMovimiento(FechaInicio);
+                    billeteraIE.setFechaFinMovimiento(FechaFin); 
+                }        
+                billeteraCuenta = billeteraIE.consultarMovimientos(3);                
+                DefaultPieDataset data3 = new DefaultPieDataset();
+                Iterator<logBilletera> it3 = billeteraCuenta.iterator();                
+                while(it3.hasNext()){
+                    //ya que es un array nos toca optener los valores de  cada registro
+                    logBilletera movimiento = it3.next();
+                    data3.setValue(movimiento.getNombreTipoMovimiento(), movimiento.getTotal());
+                }       // Creando el Grafico
+                JFreeChart chartIE = ChartFactory.createPieChart(
+                        "Movimientos por Ingreso vs Egresos",
+                        data3,
+                        true,
+                        true,
+                        false);// Mostrar Grafico
+                ChartFrame frameIE = new ChartFrame("JFreeChart", chartIE);
+                frameIE.pack();
+                frameIE.setVisible(true);
                 break;
         }
 
 
         
     }       
-	
-    }
+
+
+
+
+}

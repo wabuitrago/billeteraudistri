@@ -3,10 +3,10 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+
+
 import presentacion.vista.vistaReportes;
+
 
 /**
  *
@@ -26,14 +26,12 @@ public class ControladorReportes implements ActionListener{
             if (ventanaReportes.getRbnFechas().isSelected()) {
                 ventanaReportes.getModelo().funcionReportfechas();    
             }else if (ventanaReportes.getRbnCategorias().isSelected()) {
-                ventanaReportes.getModelo().funcionReportfechas();    
+                ventanaReportes.getModelo().funcionReportCat();    
             }else if (ventanaReportes.getRbningvsegreso().isSelected()) {
-                ventanaReportes.getModelo().funcionReportfechas();    
+                ventanaReportes.getModelo().funcionReportIngVSEgre();    
             }
         }
-        if (e.getSource()==ventanaReportes.getBtnexportar()) {
-        //ventanaReportes.getModelo().funcionReportfechas();    
-        } 
+         
         if (e.getSource()==ventanaReportes.getBtngraficar()) {
             int tipoconsulta=1;
             if (ventanaReportes.getRbnFechas().isSelected()) {

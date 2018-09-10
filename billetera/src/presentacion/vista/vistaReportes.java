@@ -44,10 +44,6 @@ public class vistaReportes extends javax.swing.JFrame {
         return BtnGenerarReport;
     }
 
-    public JButton getBtnexportar() {
-        return Btnexportar;
-    }
-
     public JDateChooser getJdcfechafinal() {
         return Jdcfechafinal;
     }
@@ -94,7 +90,6 @@ public class vistaReportes extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Btnexportar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tblresultadoreport = new javax.swing.JTable();
         Jdcfechafinal = new com.toedter.calendar.JDateChooser();
@@ -115,8 +110,6 @@ public class vistaReportes extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha Final");
 
-        Btnexportar.setText("Exportar a Excel");
-
         Tblresultadoreport.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -135,6 +128,7 @@ public class vistaReportes extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Reportes"));
 
         Bgptiporeportes.add(RbnFechas);
+        RbnFechas.setSelected(true);
         RbnFechas.setText("Fechas");
 
         Bgptiporeportes.add(Rbningvsegreso);
@@ -197,24 +191,19 @@ public class vistaReportes extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(44, 44, 44))))
             .addGroup(layout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(jLabel1)
+                .addContainerGap(184, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(Btnexportar)
-                        .addGap(47, 47, 47)
-                        .addComponent(Btngraficar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(Btnregresar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(146, 146, 146)
+                .addComponent(Btngraficar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Btnregresar)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,13 +222,11 @@ public class vistaReportes extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btnexportar)
-                    .addComponent(Btngraficar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Btnregresar)
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(Btngraficar)
+                    .addComponent(Btnregresar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -249,7 +236,6 @@ public class vistaReportes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Bgptiporeportes;
     private javax.swing.JButton BtnGenerarReport;
-    private javax.swing.JButton Btnexportar;
     private javax.swing.JButton Btngraficar;
     private javax.swing.JButton Btnregresar;
     private com.toedter.calendar.JDateChooser Jdcfechafinal;
@@ -266,9 +252,9 @@ public class vistaReportes extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 private void capturarEventos() {
         BtnGenerarReport.addActionListener(getControl());
-        Btnexportar.addActionListener(getControl());
         Btngraficar.addActionListener(getControl());
         Btnregresar.addActionListener(getControl());
+
         
     }
 }
