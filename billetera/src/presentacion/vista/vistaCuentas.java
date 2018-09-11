@@ -7,6 +7,7 @@ package presentacion.vista;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import presentacion.controlador.ControladorCuentas;
@@ -109,6 +110,11 @@ private final Modelo modelo;
         BtnRegresarCue.setText("Regresar");
 
         BtnCrearCue.setText("Crear");
+        BtnCrearCue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCrearCueActionPerformed(evt);
+            }
+        });
 
         TxtIdCuenta.setEditable(false);
         TxtIdCuenta.setEnabled(false);
@@ -205,6 +211,11 @@ private final Modelo modelo;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnCrearCueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearCueActionPerformed
+       if (TxtnombreCuenta.getText().isEmpty())
+           JOptionPane.showConfirmDialog(null, "Ingrese un nombre de cuenta","error",JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_BtnCrearCueActionPerformed
 
  
     // Variables declaration - do not modify//GEN-BEGIN:variables

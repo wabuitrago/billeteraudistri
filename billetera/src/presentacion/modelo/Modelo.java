@@ -102,7 +102,7 @@ public class Modelo {
 
 	//para la vista cuentas
 	public void funcionVistaCuenta(){
-           getVistaCuentas().setSize(500,300);           
+           getVistaCuentas().setSize(600,400);           
            getVistaCuentas().setVisible(true);           
            getVistaPrincipal().setVisible(false);
            List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
@@ -139,7 +139,8 @@ public class Modelo {
            getVistaReportes().setVisible(false);
            getVistaPrincipal().setVisible(true);          
            getVistaCategorias().setVisible(false);                     
-           getVistaReportes().setVisible(false);                     
+           getVistaReportes().setVisible(false);
+           getVistaCuentas().setVisible(false);
         }	        
 
 ///funciones para la vista de Cuentas    
