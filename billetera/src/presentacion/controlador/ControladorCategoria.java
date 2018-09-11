@@ -39,7 +39,8 @@ public class ControladorCategoria implements ActionListener{
 
             if (filaeditar>=0 && filaFS==1) {
                 ventanaCategoria.getTxtNombreCat().setText(String.valueOf(ventanaCategoria.getTblcatconsulta().getValueAt(filaeditar, 1)));
-                ventanaCategoria.getCbTipoCat().setSelectedItem(String.valueOf(ventanaCategoria.getTblcatconsulta().getValueAt(filaeditar, 2)));
+                ventanaCategoria.getModelo().seleccionarItem(ventanaCategoria.getCbTipoCat(), (int) ventanaCategoria.getTblcatconsulta().getValueAt(filaeditar, 2));
+                //ventanaCategoria.getCbTipoCat().setSelectedItem(String.valueOf(ventanaCategoria.getTblcatconsulta().getValueAt(filaeditar, 2)));
                 ventanaCategoria.getBtnCrearCat().setEnabled(false);
                 ventanaCategoria.getBtnRegresar().setEnabled(false);
                 ventanaCategoria.getBtnlistarcat().setEnabled(false);

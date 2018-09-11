@@ -377,17 +377,19 @@ public class Modelo {
          
         modelot.addColumn("Id");       
         modelot.addColumn("Nombre Categoria");
+        modelot.addColumn("Id Tipo Movimiento");
         modelot.addColumn("Tipo Movimiento");
  
         
-        Object[] columna = new Object[3];
+        Object[] columna = new Object[4];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
 
         for (int i = 0; i < numRegistros; i++) {
             columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
             columna[1] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
-            columna[2] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
+            columna[2] = resultado.get(i).getIdTipoMovimiento();//aca debe ir el get del resulado
+            columna[3] = resultado.get(i).getNombreTipoMovimiento();//aca debe ir el get del resulado
            
             modelot.addRow(columna);
         }
@@ -565,8 +567,22 @@ public class Modelo {
             cbTipoCuenta.addItem(new Item(billeteraTipoCuentas.get(i).getIdTipoCuenta(), billeteraTipoCuentas.get(i).getNombreTipoCuenta()));
         }
     }
+    
+    public void seleccionarItem(JComboBox cbTipoCuenta,int indice){
+        Item item;
+        for (int i = 0; i < cbTipoCuenta.getItemCount(); i++)
+        {
+            item = (Item)cbTipoCuenta.getItemAt(i);
+            int valorId = item.getId();
+            if (valorId == indice)
+            {
+                cbTipoCuenta.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
 
-    class Item
+    public class Item
     {
         private int id;
         private String description;
