@@ -46,10 +46,6 @@ public class vistaCategorias extends javax.swing.JFrame {
         return Btneditarcat;
     }
 
-    public JButton getBtneliminarcat() {
-        return Btneliminarcat;
-    }
-
     public JButton getBtnlistarcat() {
         return Btnlistarcat;
     }
@@ -84,7 +80,6 @@ public class vistaCategorias extends javax.swing.JFrame {
         Tblcatconsulta = new javax.swing.JTable();
         Btneditarcat = new javax.swing.JButton();
         Btnlistarcat = new javax.swing.JButton();
-        Btneliminarcat = new javax.swing.JButton();
         Btnokeditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -123,8 +118,6 @@ public class vistaCategorias extends javax.swing.JFrame {
         Btneditarcat.setText("Editar");
 
         Btnlistarcat.setText("Listar");
-
-        Btneliminarcat.setText("Eliminar");
 
         Btnokeditar.setText("Ok");
 
@@ -167,11 +160,7 @@ public class vistaCategorias extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(38, 38, 38)
-                                        .addComponent(Btneliminarcat)))))
+                                .addComponent(jLabel3)))
                         .addGap(39, 39, 39))))
         );
         layout.setVerticalGroup(
@@ -191,13 +180,11 @@ public class vistaCategorias extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btneliminarcat)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Btnlistarcat)
-                        .addComponent(BtnCrearCat)
-                        .addComponent(Btneditarcat)
-                        .addComponent(Btnokeditar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Btnlistarcat)
+                    .addComponent(BtnCrearCat)
+                    .addComponent(Btneditarcat)
+                    .addComponent(Btnokeditar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -216,7 +203,6 @@ public class vistaCategorias extends javax.swing.JFrame {
     private javax.swing.JButton BtnCrearCat;
     private javax.swing.JButton BtnRegresar;
     private javax.swing.JButton Btneditarcat;
-    private javax.swing.JButton Btneliminarcat;
     private javax.swing.JButton Btnlistarcat;
     private javax.swing.JButton Btnokeditar;
     private javax.swing.JComboBox<String> CbTipoCat;
@@ -232,7 +218,6 @@ private void capturarEventos() {
         BtnRegresar.addActionListener(getControl());
         Btneditarcat.addActionListener(getControl());
         Btnlistarcat.addActionListener(getControl());
-        Btneliminarcat.addActionListener(getControl());
         Btnokeditar.addActionListener(getControl());
     }
 }

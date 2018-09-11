@@ -34,6 +34,7 @@ import presentacion.vista.vistaCuentas;
  import java.io.FileOutputStream;
  import java.util.List;
  import javax.swing.JTable;
+import presentacion.vista.vistaMovimientos;
  //import jxl.Workbook;
  //import jxl.write.Label;
  //import jxl.write.WritableSheet;
@@ -48,6 +49,7 @@ public class Modelo {
     private vistaReportes vistaReportes;
     private logBilletera Logica;
     private vistaCuentas vistaCuentas;
+    private vistaMovimientos vistaMovimientos;
 
 //metodo de la vista principal
     public vistaPrincipal getVistaPrincipal() {
@@ -74,6 +76,12 @@ public class Modelo {
         }
         return vistaCuentas;
      }   
+     public vistaMovimientos getVistaMovimientos(){
+         if(vistaMovimientos == null){
+            vistaMovimientos = new vistaMovimientos(this);
+        }
+        return vistaMovimientos;         
+     }         
         public logBilletera getLogica() {
         if(Logica == null){
             Logica = new logBilletera();
@@ -103,7 +111,10 @@ public class Modelo {
 
 	//para la vista movimientos
 	public void funcionVistaMovi(){
-	//Muchas cosas para crear la vista        
+           getVistaReportes().setVisible(false);
+           getVistaPrincipal().setVisible(false);          
+           getVistaMovimientos().setVisible(true);          
+           getVistaCategorias().setVisible(false);        
     }
 	
 	//para la vista Categoria
@@ -111,6 +122,8 @@ public class Modelo {
 	//Muchas cosas para crear la vista        
            getVistaCategorias().setVisible(true);
            getVistaPrincipal().setVisible(false);  
+           getVistaMovimientos().setVisible(false);          
+           getVistaReportes().setVisible(false);
     }
 
 	//para la vista Reportes
@@ -118,6 +131,7 @@ public class Modelo {
 	//Muchas cosas para crear la vista        
            getVistaReportes().setVisible(true);
            getVistaPrincipal().setVisible(false);          
+           getVistaReportes().setVisible(false);          
         }	
 
         public void funcionVistaRegresar(){
@@ -125,7 +139,7 @@ public class Modelo {
            getVistaReportes().setVisible(false);
            getVistaPrincipal().setVisible(true);          
            getVistaCategorias().setVisible(false);                     
-           getVistaCuentas().setVisible(false);                     
+           getVistaReportes().setVisible(false);                     
         }	        
 
 ///funciones para la vista de Cuentas    
@@ -378,7 +392,7 @@ public class Modelo {
         tablaR.setModel(modelot);
         
         modelot.addColumn("Nombre Categoria");
-        modelot.addColumn("Total");
+        modelot.addColumn("Tipo Movimiento");
  
         
         Object[] columna = new Object[2];
@@ -386,8 +400,8 @@ public class Modelo {
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
 
         for (int i = 0; i < numRegistros; i++) {
-            columna[0] = resultado.get(i).getNombreCategoria();//aca debe ir el get del resulado
-            columna[1] = resultado.get(i).getTotal();//aca debe ir el get del resulado
+            columna[0] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
            
             modelot.addRow(columna);
         }

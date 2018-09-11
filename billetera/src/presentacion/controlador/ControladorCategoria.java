@@ -23,7 +23,12 @@ public class ControladorCategoria implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==ventanaCategoria.getBtnCrearCat()) {
-            ventanaCategoria.getModelo().funcionCatCrear();    
+            if (ventanaCategoria.getTxtNombreCat().getText().length()==0) {
+                JOptionPane.showMessageDialog(ventanaCategoria, "ingrese un nombre para la categoria");
+            }else{
+            ventanaCategoria.getModelo().funcionCatCrear();        
+            }
+            
         }
         if (e.getSource()==ventanaCategoria.getBtnlistarcat()) {
             ventanaCategoria.getModelo().funcionConsultarCat();    
@@ -37,7 +42,6 @@ public class ControladorCategoria implements ActionListener{
                 ventanaCategoria.getCbTipoCat().setSelectedItem(String.valueOf(ventanaCategoria.getTblcatconsulta().getValueAt(filaeditar, 2)));
                 ventanaCategoria.getBtnCrearCat().setEnabled(false);
                 ventanaCategoria.getBtnRegresar().setEnabled(false);
-                ventanaCategoria.getBtneliminarcat().setEnabled(false);
                 ventanaCategoria.getBtnlistarcat().setEnabled(false);
             }else{
                 JOptionPane.showMessageDialog(ventanaCategoria, "Debe seleccionar una fila o almenos una");
@@ -46,7 +50,6 @@ public class ControladorCategoria implements ActionListener{
         if (e.getSource()==ventanaCategoria.getBtnokeditar()) {
             ventanaCategoria.getBtnCrearCat().setEnabled(true);
             ventanaCategoria.getBtnRegresar().setEnabled(true);
-            ventanaCategoria.getBtneliminarcat().setEnabled(true);
             ventanaCategoria.getBtnlistarcat().setEnabled(true);
             int filaeditar=ventanaCategoria.getTblcatconsulta().getSelectedRow();
             int id =Integer.parseInt(String.valueOf(ventanaCategoria.getTblcatconsulta().getValueAt(filaeditar, 0)));

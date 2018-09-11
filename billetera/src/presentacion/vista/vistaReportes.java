@@ -27,6 +27,7 @@ public class vistaReportes extends javax.swing.JFrame {
         modelo = s;
         initComponents();
         capturarEventos();//aca irir las acciones de cada boton
+        System.out.println("aca llego");
     }
     
    public ControladorReportes getControl() {
