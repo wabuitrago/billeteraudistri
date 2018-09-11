@@ -131,7 +131,7 @@ public class Modelo {
 	//Muchas cosas para crear la vista        
            getVistaReportes().setVisible(true);
            getVistaPrincipal().setVisible(false);          
-           getVistaReportes().setVisible(false);          
+       
         }	
 
         public void funcionVistaRegresar(){
@@ -366,10 +366,11 @@ public class Modelo {
         modelot.addColumn("Categoria");
         modelot.addColumn("Cuenta");
         modelot.addColumn("Tipo Movimiento");
+        modelot.addColumn("Total");
         
         System.out.println("resultado lista movimientos: "+ resultado.size());        
         
-        Object[] columna = new Object[4];
+        Object[] columna = new Object[5];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
                 
@@ -379,6 +380,7 @@ public class Modelo {
             columna[1] = resultado.get(i).getNombreCategoria();
             columna[2] = resultado.get(i).getNombreCuenta();
             columna[3] = resultado.get(i).getNombreTipoMovimiento();
+            columna[4] = resultado.get(i).getTotal();
             modelot.addRow(columna);
         }
     }
