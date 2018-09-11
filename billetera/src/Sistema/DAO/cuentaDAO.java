@@ -25,8 +25,15 @@ public class cuentaDAO implements CRUD<cuenta>{
     private static final String SQL_INSERT = "INSERT INTO cuenta(nombreCuenta, idTipoCuenta, documento, saldo) VALUES(?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM cuenta WHERE idCuenta = ?";
     private static final String SQL_UPDATE = "UPDATE cuenta SET nombreCuenta = ?, idTipoCuenta = ?, saldo = ? WHERE idCuenta = ?";
-    private static final String SQL_READ = "SELECT idCuenta, nombreCuenta, tc.idTipoCuenta, documento, saldo, tc.Nombre FROM cuenta c inner join tipoCuenta tc on tc.idTipoCuenta=c.idTipoCuenta WHERE idCuenta = ?";
-    private static final String SQL_READALL = "SELECT idCuenta, nombreCuenta, tc.idTipoCuenta, documento, saldo, tc.Nombre FROM cuenta c inner join tipoCuenta tc on tc.idTipoCuenta=c.idTipoCuenta";
+    private static final String SQL_READ = "SELECT idCuenta, nombreCuenta, tc.idTipoCuenta, documento, saldo, tc.Nombre FROM cuenta as c inner join tipoCuenta as tc on tc.idTipoCuenta=c.idTipoCuenta WHERE idCuenta = ?";
+    private static final String SQL_READALL = "select idCuenta, nombreCuenta, idTipoCuenta, documento, sum(total) saldo, Nombre from (" +
+"SELECT c.idCuenta, nombreCuenta, tc.idTipoCuenta, documento, tc.Nombre, ca.tipoMovimiento, case ca.tipoMovimiento when 1 then sum(m.valor) else sum(-m.valor) end total" +
+" FROM cuenta as c " +
+" inner join tipoCuenta as tc on tc.idTipoCuenta=c.idTipoCuenta" +
+" left join movimiento as m on m.idCuenta=c.idCuenta" +
+" left join categoria as ca on ca.idCategoria=m.idCategoria" +
+" group by c.idCuenta, nombreCuenta, tc.idTipoCuenta, documento, tc.Nombre, ca.tipoMovimiento)" +
+" group by idCuenta, nombreCuenta, idTipoCuenta, documento, Nombre";
     
     private static final Conexion cn = Conexion.conectarse();
     
