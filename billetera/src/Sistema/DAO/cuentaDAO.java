@@ -24,7 +24,7 @@ public class cuentaDAO implements CRUD<cuenta>{
 
     private static final String SQL_INSERT = "INSERT INTO cuenta(nombreCuenta, idTipoCuenta, documento, saldo) VALUES(?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM cuenta WHERE idCuenta = ?";
-    private static final String SQL_UPDATE = "UPDATE cuenta SET nombreCuenta = ?, idTipoCuenta = ?, saldo = ? WHERE idCuenta = ?";
+    private static final String SQL_UPDATE = "UPDATE cuenta SET nombreCuenta = ?, idTipoCuenta = ? WHERE idCuenta = ?";
     private static final String SQL_READ = "SELECT idCuenta, nombreCuenta, tc.idTipoCuenta, documento, saldo, tc.Nombre FROM cuenta as c inner join tipoCuenta as tc on tc.idTipoCuenta=c.idTipoCuenta WHERE idCuenta = ?";
     private static final String SQL_READALL = "select idCuenta, nombreCuenta, idTipoCuenta, documento, sum(total) saldo, Nombre from (" +
             "SELECT c.idCuenta, nombreCuenta, tc.idTipoCuenta, documento, tc.Nombre, ca.tipoMovimiento, case ca.tipoMovimiento when 1 then sum(m.valor) else sum(-m.valor) end total" +
@@ -84,7 +84,7 @@ public class cuentaDAO implements CRUD<cuenta>{
             ps = cn.getCnn().prepareStatement(SQL_UPDATE);
             ps.setString(1, campos.getNombreCuenta());
             ps.setInt(2, campos.getIdTipoCuenta());
-            ps.setInt(3, campos.getSaldo());
+            //ps.setInt(3, campos.getSaldo());
             ps.setInt(3, campos.getIdCuenta());
                     
             if (ps.executeUpdate() > 0){

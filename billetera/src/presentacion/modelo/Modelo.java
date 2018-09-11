@@ -237,7 +237,7 @@ public class Modelo {
         //getLogica().setTotal(saldoCuenta);
         getLogica().setIdTipoCuenta(numtipo);
         
-        resultado=getLogica().crearCuenta();
+        resultado=getLogica().actualizarCuenta();
         
         if(resultado){
             JOptionPane.showMessageDialog(vistaCuentas, "Cuenta editada exitosamente");
@@ -528,19 +528,21 @@ public void llenarcat(JTable tablaR, List<logBilletera> resultado){
         tablaR.setModel(modelot);
         
         modelot.addColumn("Id Cuenta");
-        modelot.addColumn("Tipo Cuenta");
         modelot.addColumn("Nombre Cuenta");
+        modelot.addColumn("Id Tipo Cuenta");
+        modelot.addColumn("Tipo Cuenta");
         modelot.addColumn("Saldo");
         
-        Object[] columna = new Object[4];
+        Object[] columna = new Object[5];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
 
         for (int i = 0; i < numRegistros; i++) {
             columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
-            columna[1] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
-            columna[2] = resultado.get(i).getNombreCuenta();
-            columna[3] = resultado.get(i).getTotal();
+            columna[1] = resultado.get(i).getNombreCuenta();
+            columna[2] = resultado.get(i).getIdTipoCuenta();
+            columna[3] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
+            columna[4] = resultado.get(i).getTotal();
             
             modelot.addRow(columna);
         }
