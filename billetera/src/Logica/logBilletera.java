@@ -63,6 +63,7 @@ public class logBilletera {
         //inicializa Dao de cuentas
         cuentaDAO cuentasDao = new cuentaDAO();
         //crear cuenta
+        this.documento = 1234567890;
         return cuentasDao.create(new cuenta(0, this.nombreCuenta, this.idTipoCuenta, this.documento, 0));
     }
     
@@ -142,6 +143,7 @@ public class logBilletera {
             registroCuenta.setNombreCuenta(cuenta.getNombreCuenta());
             registroCuenta.setIdTipoCuenta(cuenta.getIdTipoCuenta());
             registroCuenta.setNombreTipoCuenta(cuenta.getNombreTipoCuenta());
+            registroCuenta.setTotal(cuenta.getSaldo());
             //se agrega al array el registro
             billeteraCuenta.add(registroCuenta);
         }
