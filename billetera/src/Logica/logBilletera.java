@@ -34,6 +34,9 @@ public class logBilletera {
 
         
     private int idCuenta;
+    private int idCuentaDest;
+    private int idCategoriaIngTras = 4;
+    private int idCategoriaEgrTras = 3;
     private int idTipoCuenta;
     private int idTipoMovimiento;
     private int idCategoria;
@@ -75,7 +78,7 @@ public class logBilletera {
         //inicializa Dao de movimientos
         movimientoDAO movimientosDao = new movimientoDAO();
         //crear movimiento
-        return movimientosDao.create(new movimiento(0, this.fechaIniMovimiento, 0, this.notaMovimiento, this.idCuenta, this.idCategoria));
+        return movimientosDao.create(new movimiento(0, this.fechaIniMovimiento, this.total, this.notaMovimiento, this.idCuenta, this.idCategoria));
     }
 
     /**
@@ -108,7 +111,7 @@ public class logBilletera {
         //inicializa Dao de movimientos
         movimientoDAO movimientosDao = new movimientoDAO();
         //actualizar movimiento
-        return movimientosDao.update(new movimiento(this.idMovimiento, this.fechaIniMovimiento, 0, this.notaMovimiento, this.idCuenta, this.idCategoria));
+        return movimientosDao.update(new movimiento(this.idMovimiento, this.fechaIniMovimiento, this.total, this.notaMovimiento, this.idCuenta, this.idCategoria));
     }
     
     /**
@@ -186,8 +189,8 @@ public class logBilletera {
             logBilletera registroCategoria = new logBilletera();
             registroCategoria.setIdCuenta(categoria.getIdCategoria());
             registroCategoria.setNombreCuenta(categoria.getNombreCategoria());
-            registroCategoria.setIdTipoCuenta(categoria.getTipoMovimiento());
-            registroCategoria.setNombreTipoCuenta(categoria.getNombreTipoMovimiento());
+            registroCategoria.setIdTipoMovimiento(categoria.getTipoMovimiento());
+            registroCategoria.setNombreTipoMovimiento(categoria.getNombreTipoMovimiento());
             //se agrega al array el registro
             billeteraCategoria.add(registroCategoria);
         }
@@ -283,6 +286,21 @@ public class logBilletera {
             billeteraTipoCuentas.add(registroTipoCuenta);
         }
         return billeteraTipoCuentas;
+    }
+    
+    public boolean transferencias(){
+        boolean resultado = false;
+        
+        this.idTipoMovimiento = this.idCategoriaEgrTras;
+        //crea movimiento egreso
+        if(crearMovimiento()){
+            //crea movimiento ingreso
+            this.idTipoMovimiento = this.idCategoriaIngTras;
+            this.idCuenta = this.idCuentaDest;
+            if (crearMovimiento())
+                resultado = true;
+        }
+        return resultado;
     }
             
     public int getIdCategoria() {
@@ -395,6 +413,14 @@ public class logBilletera {
 
     public void setFechaFinMovimiento(Date fechaFinMovimiento) {
         this.fechaFinMovimiento = fechaFinMovimiento;
+    }
+
+    public int getIdCuentaDest() {
+        return idCuentaDest;
+    }
+
+    public void setIdCuentaDest(int idCuentaDest) {
+        this.idCuentaDest = idCuentaDest;
     }
 
     
