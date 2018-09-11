@@ -8,9 +8,11 @@ package Logica;
 import Sistema.DAO.categoriaDAO;
 import Sistema.DAO.cuentaDAO;
 import Sistema.DAO.movimientoDAO;
+import Sistema.DAO.tipoCuentaDAO;
 import Sistema.DTO.categoria;
 import Sistema.DTO.cuenta;
 import Sistema.DTO.movimiento;
+import Sistema.DTO.tipoCuenta;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -61,6 +63,7 @@ public class logBilletera {
         //inicializa Dao de cuentas
         cuentaDAO cuentasDao = new cuentaDAO();
         //crear cuenta
+        this.documento = 1234567890;
         return cuentasDao.create(new cuenta(0, this.nombreCuenta, this.idTipoCuenta, this.documento, 0));
     }
     
@@ -140,6 +143,7 @@ public class logBilletera {
             registroCuenta.setNombreCuenta(cuenta.getNombreCuenta());
             registroCuenta.setIdTipoCuenta(cuenta.getIdTipoCuenta());
             registroCuenta.setNombreTipoCuenta(cuenta.getNombreTipoCuenta());
+            registroCuenta.setTotal(cuenta.getSaldo());
             //se agrega al array el registro
             billeteraCuenta.add(registroCuenta);
         }
@@ -245,6 +249,42 @@ public class logBilletera {
         return billeteraMovimiento;
     }
     
+    /**
+    * Funcion para consultar los tipos de cuentas
+    * Si se tiene el id se consulta el registro de lo contrario todos los tipos cuentas
+     * @return listado de tipo cuentas
+    */
+    public List<logBilletera> consultarTipoCuentas(){
+        //Array de billetera para categorias consultadas
+        ArrayList<logBilletera> billeteraTipoCuentas = new ArrayList();
+        //inicializa Dao de categorias
+        tipoCuentaDAO tipoCuentaDao = new tipoCuentaDAO();
+        //Listado retornado por el dao
+        List<tipoCuenta> tipoCuentaDTO = null;
+                
+        if (this.idCuenta > 0){
+            //consulto tipocuentas
+            tipoCuentaDTO = tipoCuentaDao.read(this.idTipoCuenta);
+        } else {
+            
+            tipoCuentaDTO = tipoCuentaDao.readAll();
+        }
+        //tomamos el iterador para recorrer los resultados del DAO
+        Iterator<tipoCuenta> iteradorTipoCuentas = tipoCuentaDTO.listIterator();
+        
+        while( iteradorTipoCuentas.hasNext() ) {
+            //ya que es un array nos toca optener los valores de  cada registro
+            tipoCuenta tipoCuenta = iteradorTipoCuentas.next();
+            //se inicializa un tipo logbilletera para crear los registros
+            logBilletera registroTipoCuenta = new logBilletera();
+            registroTipoCuenta.setIdCuenta(tipoCuenta.getIdTipoCuenta());
+            registroTipoCuenta.setNombreCuenta(tipoCuenta.getNombre());
+            //se agrega al array el registro
+            billeteraTipoCuentas.add(registroTipoCuenta);
+        }
+        return billeteraTipoCuentas;
+    }
+            
     public int getIdCategoria() {
         return idCategoria;
     }

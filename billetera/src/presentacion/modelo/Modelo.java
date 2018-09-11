@@ -147,12 +147,11 @@ public class Modelo {
 	//Crear
 	public void funcionCuentasCrear(){
 	String nombreCuenta, tipoCuenta;
-        int numtipo,saldoCuenta,DocCuenta;
+        int numtipo;//saldoCuenta;
         Boolean resultado;
         
         nombreCuenta=getVistaCuentas().getTxtnombreCuenta().getText();
-        DocCuenta=Integer.parseInt(getVistaCuentas().getTxtDocumentoCue().getText());
-        saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
+        //saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
         tipoCuenta=getVistaCuentas().getCBTipoCuenta().getSelectedItem().toString();
         switch (tipoCuenta) {
             case "Tarjeta Debito":
@@ -166,8 +165,7 @@ public class Modelo {
                 break;
         }
         getLogica().setNombreCuenta(nombreCuenta);
-        getLogica().setDocumento(DocCuenta);
-        getLogica().setTotal(saldoCuenta);
+        //getLogica().setTotal(saldoCuenta);
         getLogica().setIdTipoCuenta(numtipo);
         
         resultado=getLogica().crearCuenta();
@@ -184,12 +182,11 @@ public class Modelo {
     
     public void funcionCuentasEditar(int id){
 	String nombreCuenta, tipoCuenta;
-        int numtipo,saldoCuenta,DocCuenta;
+        int numtipo;//saldoCuenta;
         Boolean resultado;
         
         nombreCuenta=getVistaCuentas().getTxtnombreCuenta().getText();
-        DocCuenta=Integer.parseInt(getVistaCuentas().getTxtDocumentoCue().getText());
-        saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
+        //saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
         tipoCuenta=getVistaCuentas().getCBTipoCuenta().getSelectedItem().toString();
         switch (tipoCuenta) {
             case "Tarjeta Debito":
@@ -204,8 +201,7 @@ public class Modelo {
         }
         getLogica().setIdCuenta(id);
         getLogica().setNombreCuenta(nombreCuenta);
-        getLogica().setDocumento(DocCuenta);
-        getLogica().setTotal(saldoCuenta);
+        //getLogica().setTotal(saldoCuenta);
         getLogica().setIdTipoCuenta(numtipo);
         
         resultado=getLogica().crearCuenta();

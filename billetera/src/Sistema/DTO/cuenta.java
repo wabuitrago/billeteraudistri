@@ -30,7 +30,7 @@ public class cuenta {
         this.idTipoCuenta = idTipoCuenta;
         this.documento = documento;
         this.saldo = saldo;
-        this.nombreCuenta = nombreCuenta;
+        this.nombreTipoCuenta = nombreTipoCuenta;
     }
     
     public cuenta(int idCuenta, String nombreCuenta, int idTipoCuenta, int documento, int saldo) {
