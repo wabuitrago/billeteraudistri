@@ -309,7 +309,13 @@ public class Modelo {
         
 
     }
-    
+     
+    public void funcionconsulmovimi(){
+       Logica.logBilletera llenarmov = new logBilletera();
+       List<logBilletera> billeteraConsultarmov = llenarmov.consultarMovimientos(1);
+       llenarTabla(vistaMovimientos.getTblresultmovimientos(), billeteraConsultarmov);
+    }
+
     public void funcionReportCat(){
     Logica.logBilletera billetera = new logBilletera();        
     
@@ -324,7 +330,7 @@ public class Modelo {
     }
         
     List<logBilletera> billeteraConsultar = billetera.consultarMovimientos(2);        
-    ConsultaCat(vistaReportes.getTblresultadoreport(), billeteraConsultar);            
+    llenarcat(vistaReportes.getTblresultadoreport(), billeteraConsultar);            
     }
 
     public void funcionReportIngVSEgre(){
@@ -343,6 +349,29 @@ public class Modelo {
     List<logBilletera> billeteraConsultar = billetera.consultarMovimientos(3);        
     ConsultaInVSEg(vistaReportes.getTblresultadoreport(), billeteraConsultar);                    
     }    
+    
+public void llenarcat(JTable tablaR, List<logBilletera> resultado){
+        DefaultTableModel modelot = new DefaultTableModel();
+        tablaR.setModel(modelot);
+         
+        modelot.addColumn("Nombre Categoria");
+        modelot.addColumn("Total");
+ 
+        
+        Object[] columna = new Object[2];
+        
+        int numRegistros= resultado.size();//hasta el size de la lista resultado
+
+        for (int i = 0; i < numRegistros; i++) {
+            columna[0] = resultado.get(i).getNombreCategoria();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getTotal();//aca debe ir el get del resulado
+
+           
+            modelot.addRow(columna);
+        }
+        
+    }
+    
     
     public void llenarTabla(JTable tablaR, List<logBilletera> resultado){
         DefaultTableModel modelot = new DefaultTableModel();

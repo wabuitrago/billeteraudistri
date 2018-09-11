@@ -32,6 +32,10 @@ public class ControladorPrincipal implements ActionListener{
         if(e.getSource()== ventanaPrincipal.BtnReportes){
             ventanaPrincipal.getModelo().funcionVistaReporte();
         }        
+        
+        if(e.getSource()== ventanaPrincipal.BtnMovimientos){
+            ventanaPrincipal.getModelo().funcionVistaMovi();
+        }         
     }
 
    
