@@ -27,7 +27,7 @@ public class vistaMovimientos extends javax.swing.JPanel {
         modelo = s;
         initComponents();
         capturarEventos();//aca irir las acciones de cada boton
-System.out.println("Aca ahora si llego");
+        cargarCat();
     }
    public ControladorMovimientos getControl() {
         if(control == null){
@@ -206,5 +206,7 @@ private void capturarEventos() {
         Btnregresar.addActionListener(getControl());
         Btntranslados.addActionListener(getControl());
     }
-
+private void cargarCat(){
+    getControl().CargarCategorias();
+}
 }

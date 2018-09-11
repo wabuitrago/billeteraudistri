@@ -46,6 +46,8 @@ public class ControladorMovimientos implements ActionListener{
         }                           
         
     }
-
+public void CargarCategorias(){
+    ventanaMovimientos.getModelo().funcionConsultarCat();
+}
     
 }
