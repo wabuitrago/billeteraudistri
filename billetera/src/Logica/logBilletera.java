@@ -164,6 +164,12 @@ public class logBilletera {
             categoriaDTO = catgoriasDao.read(this.idCategoria);
         } else {
             //consulto cuentas
+            String WhereCate = " where visible=1 ";
+            //colocamos las fechas de filtro
+            if(this.idTipoMovimiento > 0){
+                WhereCate = WhereCate + " and tipoMovimiento = "+this.idTipoMovimiento;
+            }
+            catgoriasDao.setFiltro(WhereCate);
             categoriaDTO = catgoriasDao.readAll();
         }
         //tomamos el iterador para recorrer los resultados del DAO

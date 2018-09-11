@@ -22,11 +22,12 @@ import java.util.logging.Logger;
  */
 public class categoriaDAO implements CRUD<categoria>{
 
+    public String filtro = "where 1=1 ";
     private static final String SQL_INSERT = "INSERT INTO categoria (nombreCategoria, tipoMovimiento) values (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM categoria WHERE idCategoria = ?";
     private static final String SQL_UPDATE = "UPDATE categoria SET nombreCategoria = ?, tipoMovimiento = ? WHERE idCategoria = ?";
     private static final String SQL_READ = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoria WHERE idCategoria = ? ";
-    private static final String SQL_READALL = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoria";
+    private static final String SQL_READALL = "SELECT idCategoria, nombreCategoria, tipoMovimiento, case tipoMovimiento when 1 then 'INGRESO' ELSE 'EGRESO' END nombreMovimiento FROM categoria ?";
     
     private static final Conexion cn = Conexion.conectarse();
     
@@ -119,7 +120,8 @@ public class categoriaDAO implements CRUD<categoria>{
         
         try {
                         
-            ps = cn.getCnn().prepareStatement(SQL_READALL);
+            String Consulta = SQL_READALL.replace("?", this.filtro);
+            ps = cn.getCnn().prepareStatement(Consulta);
             
             rs = ps.executeQuery();
             
@@ -132,6 +134,15 @@ public class categoriaDAO implements CRUD<categoria>{
         }
         
         return categorias;
+    }
+    
+      
+    public String getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
     }
     
 }
