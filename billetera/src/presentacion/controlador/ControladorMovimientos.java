@@ -7,7 +7,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import presentacion.vista.vistaMovimientos;
+import presentacion.vista.vistaMovimiento;
+import presentacion.vista.vistaMovimiento;
 
 /**
  *
@@ -15,34 +16,27 @@ import presentacion.vista.vistaMovimientos;
  */
 public class ControladorMovimientos implements ActionListener{
 
-    private final vistaMovimientos ventanaMovimientos;
+    private final vistaMovimiento ventanaMovimientos;
 
-    public ControladorMovimientos(vistaMovimientos aThis) {
+    public ControladorMovimientos(vistaMovimiento aThis) {
         ventanaMovimientos = aThis;
-    }
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-       if (e.getSource()==ventanaMovimientos.getBtnlistar()) {
-            
-        }           
-        if (e.getSource()==ventanaMovimientos.getBtneditar()) {
-            
-        }           
-        if (e.getSource()==ventanaMovimientos.getBtnok()) {
-            
-        }           
+    }
+  
+    public void actionPerformed(ActionEvent e) {
+        
+
        if (e.getSource()==ventanaMovimientos.getBtnegreso()) {
-            
+           ventanaMovimientos.getModelo().funcionVistaMoviEgr();
         }           
         if (e.getSource()==ventanaMovimientos.getBtningreso()) {
-            
+           ventanaMovimientos.getModelo().funcionVistaMoviIng();
         }           
-        if (e.getSource()==ventanaMovimientos.getBtntranslados()) {
-            
+        if (e.getSource()==ventanaMovimientos.getBtntransferencia()) {
+            ventanaMovimientos.getModelo().funcionVistaMoviTrans();
         }           
         if (e.getSource()==ventanaMovimientos.getBtnregresar()) {
-            
+            ventanaMovimientos.getModelo().funcionVistaRegresar();
         }                           
         
     }

@@ -24,10 +24,10 @@ public class ControladorMovimientosEgr implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
        if (e.getSource()==ventanaMovimientosEgr.getBtnregistrar()) {
-            
+            ventanaMovimientosEgr.getModelo().funcionMovEgreCrear();
         }           
         if (e.getSource()==ventanaMovimientosEgr.getBtnregresar()) {
-            
+            ventanaMovimientosEgr.getModelo().funcionVistaRegresar();
         }           
         
     }    

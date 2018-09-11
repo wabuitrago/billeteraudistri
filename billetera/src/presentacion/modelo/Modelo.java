@@ -35,7 +35,10 @@ import presentacion.vista.vistaCuentas;
  import java.util.List;
 import javax.swing.JComboBox;
  import javax.swing.JTable;
-import presentacion.vista.vistaMovimientos;
+import presentacion.vista.vistaMovimiento;
+import presentacion.vista.vistaMovimientosEgreso;
+import presentacion.vista.vistaMovimientosIngreso;
+import presentacion.vista.vistaMovimientosTrans;
  //import jxl.Workbook;
  //import jxl.write.Label;
  //import jxl.write.WritableSheet;
@@ -50,7 +53,10 @@ public class Modelo {
     private vistaReportes vistaReportes;
     private logBilletera Logica;
     private vistaCuentas vistaCuentas;
-    private vistaMovimientos vistaMovimientos;
+    private vistaMovimiento vistaMovimiento;
+    private vistaMovimientosIngreso vistaMovimientosIng;
+    private vistaMovimientosEgreso vistaMovimientosEgr;
+    private vistaMovimientosTrans vistaMovimientosTrans;
 
 //metodo de la vista principal
     public vistaPrincipal getVistaPrincipal() {
@@ -77,12 +83,31 @@ public class Modelo {
         }
         return vistaCuentas;
      }   
-     public vistaMovimientos getVistaMovimientos(){
-         if(vistaMovimientos == null){
-            vistaMovimientos = new vistaMovimientos(this);
+     public vistaMovimiento getVistaMovimiento(){
+         if(vistaMovimiento == null){
+            vistaMovimiento = new vistaMovimiento(this);
         }
-        return vistaMovimientos;         
+        return vistaMovimiento;         
      }         
+     
+     public vistaMovimientosEgreso getVistaMovimientosEgreso(){
+         if(vistaMovimientosEgr == null){
+            vistaMovimientosEgr = new vistaMovimientosEgreso(this);
+        }
+        return vistaMovimientosEgr;         
+     }              
+     public vistaMovimientosIngreso getVistaMovimientosIngreso(){
+         if(vistaMovimientosIng == null){
+            vistaMovimientosIng = new vistaMovimientosIngreso(this);
+        }
+        return vistaMovimientosIng;         
+     }              
+     public vistaMovimientosTrans getVistaMovimientosTrans(){
+         if(vistaMovimientosTrans == null){
+            vistaMovimientosTrans = new vistaMovimientosTrans(this);
+        }
+        return vistaMovimientosTrans;         
+     }              
         public logBilletera getLogica() {
         if(Logica == null){
             Logica = new logBilletera();
@@ -93,6 +118,7 @@ public class Modelo {
     public void iniciar() {
         //getVistaPrincipal().setSize(300, 300);
         getVistaPrincipal().setVisible(true);
+                  
         //getVistaCategorias().setVisible(false);
 /// y demas especificaciones visuales de las ventana
     }
@@ -114,18 +140,36 @@ public class Modelo {
 
 	//para la vista movimientos
 	public void funcionVistaMovi(){
-           getVistaReportes().setVisible(false);
+           getVistaMovimiento().setVisible(true);      
+           funcionconsulmovimi();
+          /*  getVistaReportes().setVisible(false);
            getVistaPrincipal().setVisible(false);          
-           getVistaMovimientos().setVisible(true);          
-           getVistaCategorias().setVisible(false);        
+           getVistaCategorias().setVisible(false);        */
     }
-	
+	public void funcionVistaMoviIng(){
+           getVistaMovimientosIngreso().setVisible(true);          
+          /*  getVistaReportes().setVisible(false);
+           getVistaPrincipal().setVisible(false);          
+           getVistaCategorias().setVisible(false);        */
+        }        
+	public void funcionVistaMoviEgr(){
+           getVistaMovimientosEgreso().setVisible(true);          
+          /*  getVistaReportes().setVisible(false);
+           getVistaPrincipal().setVisible(false);          
+           getVistaCategorias().setVisible(false);        */
+        }	
+	public void funcionVistaMoviTrans(){
+           getVistaMovimientosTrans().setVisible(true);          
+          /*  getVistaReportes().setVisible(false);
+           getVistaPrincipal().setVisible(false);          
+           getVistaCategorias().setVisible(false);        */
+        }        
 	//para la vista Categoria
 	public void funcionVistaCatego(){
 	//Muchas cosas para crear la vista        
            getVistaCategorias().setVisible(true);
            getVistaPrincipal().setVisible(false);  
-           getVistaMovimientos().setVisible(false);          
+           getVistaMovimiento().setVisible(false);          
            getVistaReportes().setVisible(false);
            cargarTipoMovimiento(vistaCategoria.getCbTipoCat());
     }
@@ -283,6 +327,60 @@ public class Modelo {
         ConsultaCat(vistaCategoria.getTblcatconsulta(),billeteraConsultarCat);
     }
             
+    public void funcionMovEgreCrear(){
+    Logica.logBilletera Crearmov = new logBilletera();        
+    String notasmovimiento;
+    if(getVistaMovimientosEgreso().getJdcfechamovimiento().getDate() != null ){
+        Date date1;
+        date1 = getVistaMovimientosEgreso().getJdcfechamovimiento().getDate();
+        java.sql.Date FechaMov = new java.sql.Date(date1.getTime());
+
+        Crearmov.setFechaIniMovimiento(FechaMov);
+        
+        notasmovimiento=getVistaMovimientosEgreso().getTxtnotasmovimiento().getText();        
+        Crearmov.setNotaMovimiento(notasmovimiento);
+        
+        Item tipo = (Item) getVistaMovimientosEgreso().getCbTipoCuenta().getSelectedItem();
+        int numtipo = tipo.getId();        
+        Crearmov.setIdCuenta(numtipo);
+
+        Item tipoCat = (Item) getVistaMovimientosEgreso().getCbTipocat().getSelectedItem();
+        int numtipocat = tipoCat.getId();        
+        Crearmov.setIdCuenta(numtipocat);
+        
+        Crearmov.crearMovimiento();
+        
+    }else
+        JOptionPane.showMessageDialog(vistaMovimientosEgr, "debe especificar una fecha");
+    }
+    
+    public void funcionMovIngCrear(){
+    Logica.logBilletera CrearmovIng = new logBilletera();        
+    String notasmovimiento;
+    if(getVistaMovimientosIngreso().getJdcfechamovimiento().getDate() != null ){
+        Date date1;
+        date1 = getVistaMovimientosEgreso().getJdcfechamovimiento().getDate();
+        java.sql.Date FechaMov = new java.sql.Date(date1.getTime());
+
+        CrearmovIng.setFechaIniMovimiento(FechaMov);
+        
+        notasmovimiento=getVistaMovimientosIngreso().getTxtnotasmovimiento().getText();        
+        CrearmovIng.setNotaMovimiento(notasmovimiento);
+        
+        Item tipo = (Item) getVistaMovimientosIngreso().getCbTipoCuenta().getSelectedItem();
+        int numtipo = tipo.getId();        
+        CrearmovIng.setIdCuenta(numtipo);
+
+        Item tipoCat = (Item) getVistaMovimientosIngreso().getCbTipoCat1().getSelectedItem();
+        int numtipocat = tipoCat.getId();        
+        CrearmovIng.setIdCuenta(numtipocat);
+        
+        CrearmovIng.crearMovimiento();
+        
+    }else
+        JOptionPane.showMessageDialog(vistaMovimientosEgr, "debe especificar una fecha");
+    }
+        
     
     public void funcionReportfechas(){
 	//String FechaInicio, FechaFin;
@@ -313,7 +411,7 @@ public class Modelo {
     public void funcionconsulmovimi(){
        Logica.logBilletera llenarmov = new logBilletera();
        List<logBilletera> billeteraConsultarmov = llenarmov.consultarMovimientos(1);
-       llenarTabla(vistaMovimientos.getTblresultmovimientos(), billeteraConsultarmov);
+       llenarTabla(vistaMovimiento.getTblresultadomov(), billeteraConsultarmov);
     }
 
     public void funcionReportCat(){

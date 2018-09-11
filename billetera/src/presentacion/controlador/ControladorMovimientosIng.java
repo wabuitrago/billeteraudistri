@@ -24,10 +24,10 @@ public class ControladorMovimientosIng implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
        if (e.getSource()==ventanaMovimientosIng.getBtnregistrar()) {
-            
+            ventanaMovimientosIng.getModelo().funcionMovIngCrear();
         }           
         if (e.getSource()==ventanaMovimientosIng.getBtnregresar()) {
-            
+        ventanaMovimientosIng.getModelo().funcionVistaRegresar();
         }           
         
     }        
