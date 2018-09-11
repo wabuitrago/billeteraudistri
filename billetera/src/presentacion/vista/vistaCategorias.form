@@ -204,6 +204,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="vistaCategorias_Tblcatconsulta"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

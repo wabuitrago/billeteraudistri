@@ -25,18 +25,19 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
 import presentacion.vista.vistaReportes;
+import presentacion.vista.vistaCuentas;
 
 
 
-import java.io.DataOutputStream;
+ import java.io.DataOutputStream;
  import java.io.File;
  import java.io.FileOutputStream;
  import java.util.List;
  import javax.swing.JTable;
- import jxl.Workbook;
- import jxl.write.Label;
- import jxl.write.WritableSheet;
- import jxl.write.WritableWorkbook;
+ //import jxl.Workbook;
+ //import jxl.write.Label;
+ //import jxl.write.WritableSheet;
+ //import jxl.write.WritableWorkbook;
 
 public class Modelo {
 
@@ -46,6 +47,7 @@ public class Modelo {
     private vistaCategorias vistaCategoria;
     private vistaReportes vistaReportes;
     private logBilletera Logica;
+    private vistaCuentas vistaCuentas;
 
 //metodo de la vista principal
     public vistaPrincipal getVistaPrincipal() {
@@ -64,8 +66,14 @@ public class Modelo {
          if(vistaReportes == null){
             vistaReportes = new vistaReportes(this);
         }
-        return vistaReportes;         
+         return vistaReportes;         
      }
+     public vistaCuentas getVistaCuentas(){
+         if(vistaCuentas == null){
+            vistaCuentas = new vistaCuentas(this);
+        }
+        return vistaCuentas;
+     }   
         public logBilletera getLogica() {
         if(Logica == null){
             Logica = new logBilletera();
@@ -86,8 +94,11 @@ public class Modelo {
 
 	//para la vista cuentas
 	public void funcionVistaCuenta(){
-	//Muchas cosas para crear la vista 
-            System.out.println("para cuenta");
+           getVistaCuentas().setSize(500,300);           
+           getVistaCuentas().setVisible(true);           
+           getVistaPrincipal().setVisible(false);
+           List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
+           ConsultaCue(vistaCuentas.getTblCuentasConsulta(),billeteraCuentas);
     }
 
 	//para la vista movimientos
@@ -114,23 +125,91 @@ public class Modelo {
            getVistaReportes().setVisible(false);
            getVistaPrincipal().setVisible(true);          
            getVistaCategorias().setVisible(false);                     
+           getVistaCuentas().setVisible(false);                     
         }	        
 
 ///funciones para la vista de Cuentas    
 
 	//Crear
 	public void funcionCuentasCrear(){
-	//Muchas cosas para crear la vista        
-    }
-
-	//Editar
-    public void funcionCuentasEditar(){
-	//Muchas cosas para crear la vista        
-    }	
+	String nombreCuenta, tipoCuenta;
+        int numtipo,saldoCuenta,DocCuenta;
+        Boolean resultado;
+        
+        nombreCuenta=getVistaCuentas().getTxtnombreCuenta().getText();
+        DocCuenta=Integer.parseInt(getVistaCuentas().getTxtDocumentoCue().getText());
+        saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
+        tipoCuenta=getVistaCuentas().getCBTipoCuenta().getSelectedItem().toString();
+        switch (tipoCuenta) {
+            case "Tarjeta Debito":
+                numtipo=1;
+                break;
+            case "Bolsillo":
+                numtipo=2;
+                break;
+            default:
+                numtipo=3;
+                break;
+        }
+        getLogica().setNombreCuenta(nombreCuenta);
+        getLogica().setDocumento(DocCuenta);
+        getLogica().setTotal(saldoCuenta);
+        getLogica().setIdTipoCuenta(numtipo);
+        
+        resultado=getLogica().crearCuenta();
+        
+        if(resultado){
+            //System.out.println("Crear categoria: "+nombreCategoria+" - "+numtipo);
+            JOptionPane.showMessageDialog(vistaCuentas, "Cuenta creada exitosamente");
+        }else{
+            JOptionPane.showMessageDialog(vistaCuentas, "Error al crear cuenta: "+nombreCuenta+" - "+numtipo);
+        }    
+        List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
+        ConsultaCue(vistaCuentas.getTblCuentasConsulta(),billeteraCuentas);
+    }       
+    
+    public void funcionCuentasEditar(int id){
+	String nombreCuenta, tipoCuenta;
+        int numtipo,saldoCuenta,DocCuenta;
+        Boolean resultado;
+        
+        nombreCuenta=getVistaCuentas().getTxtnombreCuenta().getText();
+        DocCuenta=Integer.parseInt(getVistaCuentas().getTxtDocumentoCue().getText());
+        saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
+        tipoCuenta=getVistaCuentas().getCBTipoCuenta().getSelectedItem().toString();
+        switch (tipoCuenta) {
+            case "Tarjeta Debito":
+                numtipo=1;
+                break;
+            case "Bolsillo":
+                numtipo=2;
+                break;
+            default:
+                numtipo=3;
+                break;
+        }
+        getLogica().setIdCuenta(id);
+        getLogica().setNombreCuenta(nombreCuenta);
+        getLogica().setDocumento(DocCuenta);
+        getLogica().setTotal(saldoCuenta);
+        getLogica().setIdTipoCuenta(numtipo);
+        
+        resultado=getLogica().crearCuenta();
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(vistaCuentas, "Cuenta editada exitosamente");
+            getVistaCuentas().getTxtnombreCuenta().setText("");
+        }else{
+            JOptionPane.showMessageDialog(vistaCuentas, "Error al editar cuenta: "+nombreCuenta+" - "+numtipo);
+        }
+    List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
+    ConsultaCue(vistaCuentas.getTblCuentasConsulta(),billeteraCuentas);
+    } 	
 	
 	//Consultar
     public void funcionCuentasConsultar(){
-	//Muchas cosas para crear la vista        
+	List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
+        ConsultaCue(vistaCuentas.getTblCuentasConsulta(),billeteraCuentas);        
     }		
         
 	//Visualizar
@@ -313,7 +392,31 @@ public class Modelo {
             modelot.addRow(columna);
         }
 
-    }    
+    }
+
+    public void ConsultaCue(JTable tablaR, List<logBilletera> resultado){
+        DefaultTableModel modelot = new DefaultTableModel();
+        tablaR.setModel(modelot);
+        
+        modelot.addColumn("Id Cuenta");
+        modelot.addColumn("Tipo Cuenta");
+        modelot.addColumn("Nombre Cuenta");
+        modelot.addColumn("Saldo");
+        
+        Object[] columna = new Object[4];
+        
+        int numRegistros= resultado.size();//hasta el size de la lista resultado 
+
+        for (int i = 0; i < numRegistros; i++) {
+            columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
+            columna[2] = resultado.get(i).getNombreCuenta();
+            columna[3] = resultado.get(i).getTotal();
+            
+            modelot.addRow(columna);
+        }
+
+    }
     
     public void ConsultaInVSEg (JTable tablaR, List<logBilletera> resultado) {
         DefaultTableModel modelot = new DefaultTableModel();

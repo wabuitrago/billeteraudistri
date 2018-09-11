@@ -27,7 +27,8 @@ public class Conexion {
             //ubicacion William
             //cnn = DriverManager.getConnection("jdbc:sqlite:C:/Users/Williamabhe/Documents/universidad/1 Semestre/billetera.db"); //conexion
             //ubicacion BD Camilo
-            cnn = DriverManager.getConnection("jdbc:sqlite:/home/camilo/NetBeansProjects/BD/billetera.db"); //conexion
+            cnn = DriverManager.getConnection("jdbc:sqlite:C:/Users/Jonathan/Documents/billetera.db");
+            //cnn = DriverManager.getConnection("jdbc:sqlite:/home/camilo/NetBeansProjects/BD/billetera.db"); //conexion
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
