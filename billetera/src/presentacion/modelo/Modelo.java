@@ -551,6 +551,7 @@ public class Modelo {
     }       
 
     private void cargarTipoMovimiento(JComboBox jC1) {
+        jC1.removeAllItems();
         jC1.addItem(new Item(1, "Ingreso" ) );
         jC1.addItem( new Item(2, "Egreso" ) );
     }
@@ -559,7 +560,7 @@ public class Modelo {
 
     private void cargarTipoCuenta(JComboBox cbTipoCuenta, List<logBilletera> billeteraTipoCuentas) {
         int numRegistros= billeteraTipoCuentas.size();//hasta el size de la lista resultado 
-                
+        cbTipoCuenta.removeAllItems();        
         for (int i = 0; i < numRegistros; i++) {
             cbTipoCuenta.addItem(new Item(billeteraTipoCuentas.get(i).getIdTipoCuenta(), billeteraTipoCuentas.get(i).getNombreTipoCuenta()));
         }
