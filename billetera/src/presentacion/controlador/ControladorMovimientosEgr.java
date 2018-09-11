@@ -5,10 +5,32 @@
  */
 package presentacion.controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import presentacion.vista.vistaMovimientosEgreso;
+
 /**
  *
  * @author camilo
  */
-public class ControladorMovimientosEgr {
+public class ControladorMovimientosEgr implements ActionListener{
+ 
+     private final vistaMovimientosEgreso ventanaMovimientosEgr;
+
+    public ControladorMovimientosEgr(vistaMovimientosEgreso aThis) {
+        ventanaMovimientosEgr = aThis;
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+
+       if (e.getSource()==ventanaMovimientosEgr.getBtnregistrar()) {
+            
+        }           
+        if (e.getSource()==ventanaMovimientosEgr.getBtnregresar()) {
+            
+        }           
+        
+    }    
+    
     
 }

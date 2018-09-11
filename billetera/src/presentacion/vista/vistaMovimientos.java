@@ -9,6 +9,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import presentacion.controlador.ControladorMovimientos;
 import presentacion.modelo.Modelo;
@@ -56,6 +57,26 @@ public class vistaMovimientos extends javax.swing.JPanel {
         return Tblmovimientos;
     }
 
+    public JTable getTblresultmovimientos() {
+        return Tblresultmovimientos;
+    }
+
+    public JButton getBtnegreso() {
+        return Btnegreso;
+    }
+
+    public JButton getBtningreso() {
+        return Btningreso;
+    }
+
+    public JButton getBtntranslados() {
+        return Btntranslados;
+    }
+
+    public JButton getBtnregresar() {
+        return Btnregresar;
+    }
+
 
 
 
@@ -69,10 +90,10 @@ public class vistaMovimientos extends javax.swing.JPanel {
         Btnlistar = new javax.swing.JButton();
         Btneditar = new javax.swing.JButton();
         Btnok = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Btnegreso = new javax.swing.JButton();
+        Btningreso = new javax.swing.JButton();
+        Btntranslados = new javax.swing.JButton();
+        Btnregresar = new javax.swing.JButton();
 
         jLabel1.setText("Movimientos");
 
@@ -95,13 +116,13 @@ public class vistaMovimientos extends javax.swing.JPanel {
 
         Btnok.setText("Ok");
 
-        jButton1.setText("Egreso");
+        Btnegreso.setText("Egreso");
 
-        jButton2.setText("Ingreso");
+        Btningreso.setText("Ingreso");
 
-        jButton3.setText("Transferencias");
+        Btntranslados.setText("Transferencias");
 
-        jButton4.setText("Regresar");
+        Btnregresar.setText("Regresar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -127,14 +148,14 @@ public class vistaMovimientos extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(Btnok))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Btntranslados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Btnegreso, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(Btningreso, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(149, 149, 149)
-                                .addComponent(jButton4)))
+                                .addComponent(Btnregresar)))
                         .addGap(0, 36, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -145,10 +166,10 @@ public class vistaMovimientos extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Btnegreso, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btningreso, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addComponent(Btntranslados, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Btnlistar)
@@ -157,7 +178,7 @@ public class vistaMovimientos extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Tblmovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btnregresar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -165,14 +186,14 @@ public class vistaMovimientos extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btneditar;
+    private javax.swing.JButton Btnegreso;
+    private javax.swing.JButton Btningreso;
     private javax.swing.JButton Btnlistar;
     private javax.swing.JButton Btnok;
+    private javax.swing.JButton Btnregresar;
+    private javax.swing.JButton Btntranslados;
     private javax.swing.JScrollPane Tblmovimientos;
     private javax.swing.JTable Tblresultmovimientos;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 private void capturarEventos() {
@@ -180,6 +201,10 @@ private void capturarEventos() {
         Btneditar.addActionListener(getControl());
         Btnlistar.addActionListener(getControl());
         Btnok.addActionListener(getControl());
+        Btnegreso.addActionListener(getControl());
+        Btningreso.addActionListener(getControl());
+        Btnregresar.addActionListener(getControl());
+        Btntranslados.addActionListener(getControl());
     }
 private void cargarCat(){
     getControl().CargarCategorias();

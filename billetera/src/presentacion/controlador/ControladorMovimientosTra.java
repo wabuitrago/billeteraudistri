@@ -5,10 +5,31 @@
  */
 package presentacion.controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import presentacion.vista.vistaMovimientosTrans;
+
 /**
  *
  * @author camilo
  */
-public class ControladorMovimientosTra {
+public class ControladorMovimientosTra implements ActionListener{
+    
+private final vistaMovimientosTrans ventanaMovimientostra;
+
+    public ControladorMovimientosTra(vistaMovimientosTrans aThis) {
+        ventanaMovimientostra = aThis;
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+
+       if (e.getSource()==ventanaMovimientostra.getBtnregistrar()) {
+            
+        }           
+        if (e.getSource()==ventanaMovimientostra.getBtnregresar()) {
+            
+        }           
+        
+    }            
     
 }

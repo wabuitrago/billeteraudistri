@@ -390,18 +390,20 @@ public class Modelo {
     public void ConsultaCat(JTable tablaR, List<logBilletera> resultado){
         DefaultTableModel modelot = new DefaultTableModel();
         tablaR.setModel(modelot);
-        
+         
+        modelot.addColumn("Id");       
         modelot.addColumn("Nombre Categoria");
         modelot.addColumn("Tipo Movimiento");
  
         
-        Object[] columna = new Object[2];
+        Object[] columna = new Object[3];
         
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
 
         for (int i = 0; i < numRegistros; i++) {
-            columna[0] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
-            columna[1] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
+            columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
+            columna[2] = resultado.get(i).getNombreTipoCuenta();//aca debe ir el get del resulado
            
             modelot.addRow(columna);
         }

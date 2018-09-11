@@ -7,7 +7,6 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import presentacion.vista.vistaCategorias;
 import presentacion.vista.vistaMovimientos;
 
 /**
@@ -33,6 +32,18 @@ public class ControladorMovimientos implements ActionListener{
         if (e.getSource()==ventanaMovimientos.getBtnok()) {
             
         }           
+       if (e.getSource()==ventanaMovimientos.getBtnegreso()) {
+            
+        }           
+        if (e.getSource()==ventanaMovimientos.getBtningreso()) {
+            
+        }           
+        if (e.getSource()==ventanaMovimientos.getBtntranslados()) {
+            
+        }           
+        if (e.getSource()==ventanaMovimientos.getBtnregresar()) {
+            
+        }                           
         
     }
 public void CargarCategorias(){
