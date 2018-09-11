@@ -277,8 +277,8 @@ public class logBilletera {
             tipoCuenta tipoCuenta = iteradorTipoCuentas.next();
             //se inicializa un tipo logbilletera para crear los registros
             logBilletera registroTipoCuenta = new logBilletera();
-            registroTipoCuenta.setIdCuenta(tipoCuenta.getIdTipoCuenta());
-            registroTipoCuenta.setNombreCuenta(tipoCuenta.getNombre());
+            registroTipoCuenta.setIdTipoCuenta(tipoCuenta.getIdTipoCuenta());
+            registroTipoCuenta.setNombreTipoCuenta(tipoCuenta.getNombre());
             //se agrega al array el registro
             billeteraTipoCuentas.add(registroTipoCuenta);
         }

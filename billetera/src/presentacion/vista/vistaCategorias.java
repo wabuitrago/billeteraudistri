@@ -1,6 +1,9 @@
 
 package presentacion.vista;
 
+import java.util.Vector;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -18,6 +21,7 @@ public class vistaCategorias extends javax.swing.JFrame {
         modelo = s;
         initComponents();
         capturarEventos();//aca irir las acciones de cada boton
+        
     }
    public ControladorCategoria getControl() {
         if(control == null){
@@ -30,10 +34,7 @@ public class vistaCategorias extends javax.swing.JFrame {
         return modelo;
     }
 
-    public JComboBox<String> getCbTipoCat() {
-        return CbTipoCat;
-    }
-
+   
     public JTextField getTxtNombreCat() {
         return TxtNombreCat;
     }
@@ -72,7 +73,6 @@ public class vistaCategorias extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BtnCrearCat = new javax.swing.JButton();
         TxtNombreCat = new javax.swing.JTextField();
-        CbTipoCat = new javax.swing.JComboBox<>();
         BtnRegresar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -80,21 +80,15 @@ public class vistaCategorias extends javax.swing.JFrame {
         Tblcatconsulta = new javax.swing.JTable();
         Btneditarcat = new javax.swing.JButton();
         Btnlistarcat = new javax.swing.JButton();
+        Btneliminarcat = new javax.swing.JButton();
         Btnokeditar = new javax.swing.JButton();
+        CbTipoCat = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Categorias");
 
         BtnCrearCat.setText("Registrar");
-
-        CbTipoCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INGRESO", "EGRESO" }));
-        CbTipoCat.setToolTipText("");
-        CbTipoCat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CbTipoCatActionPerformed(evt);
-            }
-        });
 
         BtnRegresar.setText("Regresar");
 
@@ -118,6 +112,8 @@ public class vistaCategorias extends javax.swing.JFrame {
         Btneditarcat.setText("Editar");
 
         Btnlistarcat.setText("Listar");
+
+        Btneliminarcat.setText("Eliminar");
 
         Btnokeditar.setText("Ok");
 
@@ -148,9 +144,7 @@ public class vistaCategorias extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(TxtNombreCat)
-                        .addGap(113, 113, 113)
-                        .addComponent(CbTipoCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62))
+                        .addGap(175, 175, 175))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -160,7 +154,13 @@ public class vistaCategorias extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(38, 38, 38)
+                                        .addComponent(Btneliminarcat))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(CbTipoCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3)))))
                         .addGap(39, 39, 39))))
         );
         layout.setVerticalGroup(
@@ -180,11 +180,13 @@ public class vistaCategorias extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btnlistarcat)
-                    .addComponent(BtnCrearCat)
-                    .addComponent(Btneditarcat)
-                    .addComponent(Btnokeditar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Btneliminarcat)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Btnlistarcat)
+                        .addComponent(BtnCrearCat)
+                        .addComponent(Btneditarcat)
+                        .addComponent(Btnokeditar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -195,17 +197,14 @@ public class vistaCategorias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CbTipoCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbTipoCatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CbTipoCatActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCrearCat;
     private javax.swing.JButton BtnRegresar;
     private javax.swing.JButton Btneditarcat;
+    private javax.swing.JButton Btneliminarcat;
     private javax.swing.JButton Btnlistarcat;
     private javax.swing.JButton Btnokeditar;
-    private javax.swing.JComboBox<String> CbTipoCat;
+    private javax.swing.JComboBox CbTipoCat;
     private javax.swing.JTable Tblcatconsulta;
     private javax.swing.JTextField TxtNombreCat;
     private javax.swing.JLabel jLabel1;
@@ -220,4 +219,16 @@ private void capturarEventos() {
         Btnlistarcat.addActionListener(getControl());
         Btnokeditar.addActionListener(getControl());
     }
+
+
+    public JComboBox getCbTipoCat() {
+        return CbTipoCat;
+    }
+
+    public void setCbTipoCat(JComboBox jC1) {
+        this.CbTipoCat = jC1;
+    }
+
+
 }
+

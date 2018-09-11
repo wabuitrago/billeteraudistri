@@ -52,7 +52,12 @@ private final Modelo modelo;
         return BtnRegresarCue;
     }
 
-    public JComboBox<String> getCBTipoCuenta() {
+    public void setCBTipoCuenta(JComboBox CBTipoCuenta) {
+        this.CBTipoCuenta = CBTipoCuenta;
+    }
+    
+    
+    public JComboBox getCBTipoCuenta() {
         return CBTipoCuenta;
     }
 
@@ -82,7 +87,7 @@ private final Modelo modelo;
         BtnCrearCue = new javax.swing.JButton();
         TxtIdCuenta = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        CBTipoCuenta = new javax.swing.JComboBox<>();
+        CBTipoCuenta = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         TblCuentasConsulta = new javax.swing.JTable();
         BtnEditarCue = new javax.swing.JButton();
@@ -121,8 +126,6 @@ private final Modelo modelo;
         TxtIdCuenta.setFocusCycleRoot(true);
 
         jLabel4.setText("Tipo de Cuenta");
-
-        CBTipoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tarjeta Debito", "Bolsillo", "Cuenta Ahorros" }));
 
         TblCuentasConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -222,7 +225,7 @@ private final Modelo modelo;
     public javax.swing.JButton BtnCrearCue;
     private javax.swing.JButton BtnEditarCue;
     private javax.swing.JButton BtnRegresarCue;
-    private javax.swing.JComboBox<String> CBTipoCuenta;
+    private javax.swing.JComboBox CBTipoCuenta;
     private javax.swing.JTable TblCuentasConsulta;
     public javax.swing.JTextField TxtIdCuenta;
     public javax.swing.JTextField TxtnombreCuenta;
@@ -239,4 +242,6 @@ private void capturarEventos() {
         BtnCrearCue.addActionListener(getControl());
         BtnEditarCue.addActionListener(getControl());
      }
+
+
 }

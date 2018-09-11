@@ -33,6 +33,7 @@ import presentacion.vista.vistaCuentas;
  import java.io.File;
  import java.io.FileOutputStream;
  import java.util.List;
+import javax.swing.JComboBox;
  import javax.swing.JTable;
 import presentacion.vista.vistaMovimientos;
  //import jxl.Workbook;
@@ -107,6 +108,8 @@ public class Modelo {
            getVistaPrincipal().setVisible(false);
            List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
            ConsultaCue(vistaCuentas.getTblCuentasConsulta(),billeteraCuentas);
+           List<logBilletera> billeteraTipoCuentas = new logBilletera().consultarTipoCuentas();
+           cargarTipoCuenta(vistaCuentas.getCBTipoCuenta(), billeteraTipoCuentas);
     }
 
 	//para la vista movimientos
@@ -124,7 +127,10 @@ public class Modelo {
            getVistaPrincipal().setVisible(false);  
            getVistaMovimientos().setVisible(false);          
            getVistaReportes().setVisible(false);
+           cargarTipoMovimiento(vistaCategoria.getCbTipoCat());
     }
+        
+        
 
 	//para la vista Reportes
 	public void funcionVistaReporte(){
@@ -147,24 +153,15 @@ public class Modelo {
 
 	//Crear
 	public void funcionCuentasCrear(){
-	String nombreCuenta, tipoCuenta;
+	String nombreCuenta;
         int numtipo;//saldoCuenta;
         Boolean resultado;
         
         nombreCuenta=getVistaCuentas().getTxtnombreCuenta().getText();
         //saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
-        tipoCuenta=getVistaCuentas().getCBTipoCuenta().getSelectedItem().toString();
-        switch (tipoCuenta) {
-            case "Tarjeta Debito":
-                numtipo=1;
-                break;
-            case "Bolsillo":
-                numtipo=2;
-                break;
-            default:
-                numtipo=3;
-                break;
-        }
+        Item tipoCuenta= (Item) getVistaCuentas().getCBTipoCuenta().getSelectedItem();
+        numtipo = tipoCuenta.getId();
+        
         getLogica().setNombreCuenta(nombreCuenta);
         //getLogica().setTotal(saldoCuenta);
         getLogica().setIdTipoCuenta(numtipo);
@@ -182,24 +179,15 @@ public class Modelo {
     }       
     
     public void funcionCuentasEditar(int id){
-	String nombreCuenta, tipoCuenta;
+	String nombreCuenta;
         int numtipo;//saldoCuenta;
         Boolean resultado;
         
         nombreCuenta=getVistaCuentas().getTxtnombreCuenta().getText();
         //saldoCuenta=Integer.parseInt(getVistaCuentas().getTxtsaldoInicial().getText());
-        tipoCuenta=getVistaCuentas().getCBTipoCuenta().getSelectedItem().toString();
-        switch (tipoCuenta) {
-            case "Tarjeta Debito":
-                numtipo=1;
-                break;
-            case "Bolsillo":
-                numtipo=2;
-                break;
-            default:
-                numtipo=3;
-                break;
-        }
+        Item tipoCuenta= (Item) getVistaCuentas().getCBTipoCuenta().getSelectedItem();
+        numtipo = tipoCuenta.getId();
+        
         getLogica().setIdCuenta(id);
         getLogica().setNombreCuenta(nombreCuenta);
         //getLogica().setTotal(saldoCuenta);
@@ -230,17 +218,19 @@ public class Modelo {
 
 			
     public void funcionCatCrear(){
-	String nombreCategoria, tipo;
+	String nombreCategoria;
         int numtipo;
         Boolean resultado;
         
+        
         nombreCategoria=getVistaCategorias().getTxtNombreCat().getText();
-        tipo=getVistaCategorias().getCbTipoCat().getSelectedItem().toString();
-        if (tipo.equals("INGRESO")) {
+        Item tipo = (Item) getVistaCategorias().getCbTipoCat().getSelectedItem();
+        numtipo = tipo.getId();
+        /*if (tipo.equals("INGRESO")) {
             numtipo=1;
         }else{
             numtipo=2;
-        }
+        }*/
         getLogica().setNombreCategoria(nombreCategoria);
         getLogica().setIdTipoMovimiento(numtipo);
         
@@ -260,18 +250,13 @@ public class Modelo {
     }
     
     public void funcionCatEditar(int id){
-	String nombreCategoria, tipo;
+	String nombreCategoria;
         int numtipo;
         Boolean resultado;
         
         nombreCategoria=getVistaCategorias().getTxtNombreCat().getText();
-        tipo=getVistaCategorias().getCbTipoCat().getSelectedItem().toString();
-        
-        if (tipo.equals("INGRESO")) {
-            numtipo=1;
-        }else{
-            numtipo=2;
-        }
+        Item tipo = (Item) getVistaCategorias().getCbTipoCat().getSelectedItem();
+        numtipo = tipo.getId();
         
         getLogica().setIdCategoria(id);
         getLogica().setNombreCategoria(nombreCategoria);
@@ -565,6 +550,47 @@ public class Modelo {
         
     }       
 
+    private void cargarTipoMovimiento(JComboBox jC1) {
+        jC1.addItem(new Item(1, "Ingreso" ) );
+        jC1.addItem( new Item(2, "Egreso" ) );
+    }
+
+    
+
+    private void cargarTipoCuenta(JComboBox cbTipoCuenta, List<logBilletera> billeteraTipoCuentas) {
+        int numRegistros= billeteraTipoCuentas.size();//hasta el size de la lista resultado 
+                
+        for (int i = 0; i < numRegistros; i++) {
+            cbTipoCuenta.addItem(new Item(billeteraTipoCuentas.get(i).getIdTipoCuenta(), billeteraTipoCuentas.get(i).getNombreTipoCuenta()));
+        }
+    }
+
+    class Item
+    {
+        private int id;
+        private String description;
+
+        public Item(int id, String description)
+        {
+            this.id = id;
+            this.description = description;
+        }
+
+        public int getId()
+        {
+            return id;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+
+        public String toString()
+        {
+            return description;
+        }
+    }
 
 
 
