@@ -121,6 +121,7 @@ public class categoriaDAO implements CRUD<categoria>{
         try {
                         
             String Consulta = SQL_READALL.replace("?", this.filtro);
+            System.out.println(Consulta);
             ps = cn.getCnn().prepareStatement(Consulta);
             
             rs = ps.executeQuery();

@@ -187,8 +187,8 @@ public class logBilletera {
             categoria categoria = iteradorCategorias.next();
             //se inicializa un tipo logbilletera para crear los registros
             logBilletera registroCategoria = new logBilletera();
-            registroCategoria.setIdCuenta(categoria.getIdCategoria());
-            registroCategoria.setNombreCuenta(categoria.getNombreCategoria());
+            registroCategoria.setIdCategoria(categoria.getIdCategoria());
+            registroCategoria.setNombreCategoria(categoria.getNombreCategoria());
             registroCategoria.setIdTipoMovimiento(categoria.getTipoMovimiento());
             registroCategoria.setNombreTipoMovimiento(categoria.getNombreTipoMovimiento());
             //se agrega al array el registro
@@ -291,11 +291,11 @@ public class logBilletera {
     public boolean transferencias(){
         boolean resultado = false;
         
-        this.idTipoMovimiento = this.idCategoriaEgrTras;
+        this.idCategoria = this.idCategoriaEgrTras;
         //crea movimiento egreso
         if(crearMovimiento()){
             //crea movimiento ingreso
-            this.idTipoMovimiento = this.idCategoriaIngTras;
+            this.idCategoria = this.idCategoriaIngTras;
             this.idCuenta = this.idCuentaDest;
             if (crearMovimiento())
                 resultado = true;

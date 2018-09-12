@@ -24,10 +24,10 @@ private final vistaMovimientosTrans ventanaMovimientostra;
     public void actionPerformed(ActionEvent e) {
 
        if (e.getSource()==ventanaMovimientostra.getBtnregistrar()) {
-            
+            ventanaMovimientostra.getModelo().funcionMovTraCrear();
         }           
         if (e.getSource()==ventanaMovimientostra.getBtnregresar()) {
-            
+               ventanaMovimientostra.getModelo().funcionVistaRegresar();
         }           
         
     }            

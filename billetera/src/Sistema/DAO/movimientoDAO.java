@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,7 +53,10 @@ public class movimientoDAO implements CRUD<movimiento>{
         try {
                        
             ps = cn.getCnn().prepareStatement(SQL_INSERT);
-            ps.setDate(1, campos.getFechaMovimiento());
+            
+            java.sql.Date date = new java.sql.Date(campos.getFechaMovimiento().getTime());
+            
+            ps.setString(1, date.toString());
             ps.setInt(2, campos.getValor());
             ps.setString(3, campos.getNota());
             ps.setInt(4, campos.getIdCuenta());
@@ -141,6 +145,7 @@ public class movimientoDAO implements CRUD<movimiento>{
         
         try {
             String consulta = SQL_READALL.replace("?", this.filtro);
+            System.out.println(consulta);
             ps = cn.getCnn().prepareStatement(consulta);
             
             rs = ps.executeQuery();

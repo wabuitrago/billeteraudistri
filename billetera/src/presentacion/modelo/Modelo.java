@@ -148,19 +148,38 @@ public class Modelo {
     }
 	public void funcionVistaMoviIng(){
            getVistaMovimientosIngreso().setVisible(true);          
-          /*  getVistaReportes().setVisible(false);
-           getVistaPrincipal().setVisible(false);          
-           getVistaCategorias().setVisible(false);        */
+           getVistaMovimiento().setVisible(false);
+            
+           List<logBilletera> billeteraCuentasIng = new logBilletera().consultarCuentas();
+           cargarCuenta(vistaMovimientosIng.getCbTipoCuenta(),billeteraCuentasIng);
+           
+            logBilletera billeteraCategoriasIng = new logBilletera();
+            billeteraCategoriasIng.setIdTipoMovimiento(1);
+            List<logBilletera> billeteraCategoriaIng = billeteraCategoriasIng.consultarCategorias();
+           cargarCategoria(vistaMovimientosIng.getCbTipoCat1(),billeteraCategoriaIng);
+           
         }        
 	public void funcionVistaMoviEgr(){
-           getVistaMovimientosEgreso().setVisible(true);          
+           getVistaMovimientosEgreso().setVisible(true);
+           getVistaMovimiento().setVisible(false);
+           List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
+           cargarCuenta(vistaMovimientosEgr.getCbTipoCuenta(),billeteraCuentas);
+           
+            logBilletera billeteraCategorias = new logBilletera();
+            billeteraCategorias.setIdTipoMovimiento(2);
+            List<logBilletera> billeteraCategoria = billeteraCategorias.consultarCategorias();
+           cargarCategoria(vistaMovimientosEgr.getCbTipocat(),billeteraCategoria);
           /*  getVistaReportes().setVisible(false);
            getVistaPrincipal().setVisible(false);          
            getVistaCategorias().setVisible(false);        */
         }	
 	public void funcionVistaMoviTrans(){
            getVistaMovimientosTrans().setVisible(true);          
-          /*  getVistaReportes().setVisible(false);
+           getVistaMovimiento().setVisible(false);
+           List<logBilletera> billeteraCuentas = new logBilletera().consultarCuentas();
+           cargarCuenta(vistaMovimientosTrans.getCbCuentaDes(),billeteraCuentas);
+           cargarCuenta(vistaMovimientosTrans.getCbCuentaOri(),billeteraCuentas);
+           /*  getVistaReportes().setVisible(false);
            getVistaPrincipal().setVisible(false);          
            getVistaCategorias().setVisible(false);        */
         }        
@@ -191,6 +210,10 @@ public class Modelo {
            getVistaCategorias().setVisible(false);                     
            getVistaReportes().setVisible(false);
            getVistaCuentas().setVisible(false);
+           getVistaMovimiento().setVisible(false);
+           getVistaMovimientosEgreso().setVisible(false);
+           getVistaMovimientosIngreso().setVisible(false);
+           getVistaMovimientosTrans().setVisible(false);
         }	        
 
 ///funciones para la vista de Cuentas    
@@ -330,6 +353,7 @@ public class Modelo {
     public void funcionMovEgreCrear(){
     Logica.logBilletera Crearmov = new logBilletera();        
     String notasmovimiento;
+    int valormov;
     if(getVistaMovimientosEgreso().getJdcfechamovimiento().getDate() != null ){
         Date date1;
         date1 = getVistaMovimientosEgreso().getJdcfechamovimiento().getDate();
@@ -339,16 +363,22 @@ public class Modelo {
         
         notasmovimiento=getVistaMovimientosEgreso().getTxtnotasmovimiento().getText();        
         Crearmov.setNotaMovimiento(notasmovimiento);
-        
+        System.out.println(getVistaMovimientosEgreso().getTxtvalor().getText());
+        valormov= Integer.valueOf(getVistaMovimientosEgreso().getTxtvalor().getText());
         Item tipo = (Item) getVistaMovimientosEgreso().getCbTipoCuenta().getSelectedItem();
         int numtipo = tipo.getId();        
         Crearmov.setIdCuenta(numtipo);
-
+        Crearmov.setTotal(valormov);
         Item tipoCat = (Item) getVistaMovimientosEgreso().getCbTipocat().getSelectedItem();
         int numtipocat = tipoCat.getId();        
-        Crearmov.setIdCuenta(numtipocat);
+        Crearmov.setIdCategoria(numtipocat);
+        boolean resultEgre =Crearmov.crearMovimiento();
         
-        Crearmov.crearMovimiento();
+        if (resultEgre) {
+            JOptionPane.showMessageDialog(vistaMovimientosEgr, "Se creo el movimiento");
+        }else{
+            JOptionPane.showMessageDialog(vistaMovimientosEgr, "No se creo el movimiento");
+        }
         
     }else
         JOptionPane.showMessageDialog(vistaMovimientosEgr, "debe especificar una fecha");
@@ -357,13 +387,14 @@ public class Modelo {
     public void funcionMovIngCrear(){
     Logica.logBilletera CrearmovIng = new logBilletera();        
     String notasmovimiento;
+    int valormov;
     if(getVistaMovimientosIngreso().getJdcfechamovimiento().getDate() != null ){
         Date date1;
-        date1 = getVistaMovimientosEgreso().getJdcfechamovimiento().getDate();
+        date1 = getVistaMovimientosIngreso().getJdcfechamovimiento().getDate();
         java.sql.Date FechaMov = new java.sql.Date(date1.getTime());
 
         CrearmovIng.setFechaIniMovimiento(FechaMov);
-        
+        valormov= Integer.valueOf(getVistaMovimientosIngreso().getTxtvalor().getText());
         notasmovimiento=getVistaMovimientosIngreso().getTxtnotasmovimiento().getText();        
         CrearmovIng.setNotaMovimiento(notasmovimiento);
         
@@ -373,13 +404,56 @@ public class Modelo {
 
         Item tipoCat = (Item) getVistaMovimientosIngreso().getCbTipoCat1().getSelectedItem();
         int numtipocat = tipoCat.getId();        
-        CrearmovIng.setIdCuenta(numtipocat);
-        
-        CrearmovIng.crearMovimiento();
-        
+        CrearmovIng.setIdCategoria(numtipocat);
+        CrearmovIng.setTotal(valormov);
+        boolean resultIng =CrearmovIng.crearMovimiento();
+        if (resultIng) {
+            JOptionPane.showMessageDialog(vistaMovimientosIng, "Se creo el movimiento");
+        }else
+        {
+            JOptionPane.showMessageDialog(vistaMovimientosIng, "No se creo el movimiento");
+        }            
     }else
         JOptionPane.showMessageDialog(vistaMovimientosEgr, "debe especificar una fecha");
     }
+        
+   public void funcionMovTraCrear(){
+   
+    
+    Logica.logBilletera CrearmovTra = new logBilletera();        
+    String notasmovimiento;
+    int valormov;
+    if(getVistaMovimientosTrans().getJdcfechamovimiento().getDate() != null ){
+        Date date1;
+        date1 = getVistaMovimientosTrans().getJdcfechamovimiento().getDate();
+        java.sql.Date FechaMov = new java.sql.Date(date1.getTime());
+
+        CrearmovTra.setFechaIniMovimiento(FechaMov);
+        valormov= Integer.valueOf(getVistaMovimientosTrans().getTxtvalor().getText());
+        notasmovimiento=getVistaMovimientosTrans().getTxtnotasmovimiento().getText();        
+        CrearmovTra.setNotaMovimiento(notasmovimiento);
+        
+        Item tipodes = (Item) getVistaMovimientosTrans().getCbCuentaDes().getSelectedItem();
+        int numtipo = tipodes.getId();        
+        CrearmovTra.setIdCuentaDest(numtipo);
+
+        Item tipoOr = (Item) getVistaMovimientosTrans().getCbCuentaOri().getSelectedItem();
+        int numtipoOr = tipoOr.getId();        
+        CrearmovTra.setIdCuenta(numtipoOr);
+        
+        CrearmovTra.setTotal(valormov);
+        boolean resultIng =CrearmovTra.transferencias();
+        if (resultIng) {
+            JOptionPane.showMessageDialog(vistaMovimientosIng, "Se creo el movimiento");
+        }else
+        {
+            JOptionPane.showMessageDialog(vistaMovimientosIng, "No se creo el movimiento");
+        }            
+    }else
+        JOptionPane.showMessageDialog(vistaMovimientosEgr, "debe especificar una fecha");
+   
+   
+   }
         
     
     public void funcionReportfechas(){
@@ -411,7 +485,7 @@ public class Modelo {
     public void funcionconsulmovimi(){
        Logica.logBilletera llenarmov = new logBilletera();
        List<logBilletera> billeteraConsultarmov = llenarmov.consultarMovimientos(1);
-       llenarTabla(vistaMovimiento.getTblresultadomov(), billeteraConsultarmov);
+       llenarTablamov(vistaMovimiento.getTblresultadomov(), billeteraConsultarmov);
     }
 
     public void funcionReportCat(){
@@ -470,7 +544,35 @@ public void llenarcat(JTable tablaR, List<logBilletera> resultado){
         
     }
     
-    
+public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
+        DefaultTableModel modelot = new DefaultTableModel();
+        tablaR.setModel(modelot);
+        
+        modelot.addColumn("Fecha");
+        modelot.addColumn("Categoria");
+        modelot.addColumn("Cuenta");
+        modelot.addColumn("Tipo Movimiento");
+        modelot.addColumn("Total");
+        modelot.addColumn("notas");
+        
+        System.out.println("resultado lista movimientos: "+ resultado.size());        
+        
+        Object[] columna = new Object[6];
+        
+        int numRegistros= resultado.size();//hasta el size de la lista resultado 
+                
+        for (int i = 0; i < numRegistros; i++) {
+            System.out.println("resultado lista movimientos: "+ resultado.get(i).getNombreCategoria());        
+            columna[0] = resultado.get(i).getFechaIniMovimiento();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreCategoria();
+            columna[2] = resultado.get(i).getNombreCuenta();
+            columna[3] = resultado.get(i).getNombreTipoMovimiento();
+            columna[4] = resultado.get(i).getTotal();
+            columna[5] = resultado.get(i).getNotaMovimiento();
+            modelot.addRow(columna);
+        }
+    }    
+
     public void llenarTabla(JTable tablaR, List<logBilletera> resultado){
         DefaultTableModel modelot = new DefaultTableModel();
         tablaR.setModel(modelot);
@@ -513,8 +615,8 @@ public void llenarcat(JTable tablaR, List<logBilletera> resultado){
         int numRegistros= resultado.size();//hasta el size de la lista resultado 
 
         for (int i = 0; i < numRegistros; i++) {
-            columna[0] = resultado.get(i).getIdCuenta();//aca debe ir el get del resulado
-            columna[1] = resultado.get(i).getNombreCuenta();//aca debe ir el get del resulado
+            columna[0] = resultado.get(i).getIdCategoria();//aca debe ir el get del resulado
+            columna[1] = resultado.get(i).getNombreCategoria();//aca debe ir el get del resulado
             columna[2] = resultado.get(i).getIdTipoMovimiento();//aca debe ir el get del resulado
             columna[3] = resultado.get(i).getNombreTipoMovimiento();//aca debe ir el get del resulado
            
@@ -694,6 +796,26 @@ public void llenarcat(JTable tablaR, List<logBilletera> resultado){
         cbTipoCuenta.removeAllItems();        
         for (int i = 0; i < numRegistros; i++) {
             cbTipoCuenta.addItem(new Item(billeteraTipoCuentas.get(i).getIdTipoCuenta(), billeteraTipoCuentas.get(i).getNombreTipoCuenta()));
+        }
+    }
+    
+    private void cargarCategoria(JComboBox cbCategoria, List<logBilletera> billeteraCategorias) {
+        int numRegistros= billeteraCategorias.size();//hasta el size de la lista resultado 
+        System.out.println("Crear categoria");
+        cbCategoria.removeAllItems();        
+        for (int i = 0; i < numRegistros; i++) {
+            System.out.println("Crear categoria"+billeteraCategorias.get(i).getIdCategoria());
+            cbCategoria.addItem(new Item(billeteraCategorias.get(i).getIdCategoria(), billeteraCategorias.get(i).getNombreCategoria()));
+        }
+    }
+    
+    private void cargarCuenta(JComboBox cbCuenta, List<logBilletera> billeteraCuentas) {
+        int numRegistros= billeteraCuentas.size();//hasta el size de la lista resultado 
+        System.out.println("Crear categoria");
+        cbCuenta.removeAllItems();        
+        for (int i = 0; i < numRegistros; i++) {
+            System.out.println("Crear categoria"+billeteraCuentas.get(i).getIdCategoria());
+            cbCuenta.addItem(new Item(billeteraCuentas.get(i).getIdCuenta(), billeteraCuentas.get(i).getNombreCuenta()));
         }
     }
     
