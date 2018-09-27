@@ -9,6 +9,13 @@ package presentacion.modelo;
 import presentacion.vista.vistaPrincipal;
 import presentacion.vista.vistaCategorias;
 import Logica.logBilletera;
+import static com.sun.webkit.graphics.WCImage.getImage;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -32,9 +39,12 @@ import presentacion.vista.vistaCuentas;
  import java.io.DataOutputStream;
  import java.io.File;
  import java.io.FileOutputStream;
+import java.nio.DoubleBuffer;
  import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
  import javax.swing.JTable;
+import presentacion.vista.vistaGraficas;
 import presentacion.vista.vistaMovimiento;
 import presentacion.vista.vistaMovimientosEgreso;
 import presentacion.vista.vistaMovimientosIngreso;
@@ -43,8 +53,9 @@ import presentacion.vista.vistaMovimientosTrans;
  //import jxl.write.Label;
  //import jxl.write.WritableSheet;
  //import jxl.write.WritableWorkbook;
-
-public class Modelo {
+    
+    
+public class Modelo implements Runnable{
 
 //Asignacion de variables
     //private Billetera sistema;
@@ -57,6 +68,10 @@ public class Modelo {
     private vistaMovimientosIngreso vistaMovimientosIng;
     private vistaMovimientosEgreso vistaMovimientosEgr;
     private vistaMovimientosTrans vistaMovimientosTrans;
+    private vistaGraficas vistaGraficas;
+    private Thread hiloDibujo;
+    private boolean animando;
+    private BufferedImage dobleBuffer;
 
 //metodo de la vista principal
     public vistaPrincipal getVistaPrincipal() {
@@ -108,6 +123,13 @@ public class Modelo {
         }
         return vistaMovimientosTrans;         
      }              
+     public vistaGraficas getVistGraficas(){
+            if(vistaGraficas == null){
+            vistaGraficas = new vistaGraficas(this);
+        }
+        return vistaGraficas;
+     }
+             
         public logBilletera getLogica() {
         if(Logica == null){
             Logica = new logBilletera();
@@ -195,6 +217,7 @@ public class Modelo {
         
         
 
+        
 	//para la vista Reportes
 	public void funcionVistaReporte(){
 	//Muchas cosas para crear la vista        
@@ -202,6 +225,12 @@ public class Modelo {
            getVistaPrincipal().setVisible(false);          
        
         }	
+        
+        public void funcionVistaGraficas(){
+        getVistGraficas().setVisible(true);
+        iniciarAnimacion();
+//        GraficasReporte();
+        }
 
         public void funcionVistaRegresar(){
 	//Muchas cosas para crear la vista        
@@ -214,6 +243,8 @@ public class Modelo {
            getVistaMovimientosEgreso().setVisible(false);
            getVistaMovimientosIngreso().setVisible(false);
            getVistaMovimientosTrans().setVisible(false);
+           getVistGraficas().setVisible(false);
+           animando=false;
         }	        
 
 ///funciones para la vista de Cuentas    
@@ -670,53 +701,92 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
         }        
     }
     
+    public  void GraficasReporte() {
+        Canvas lienzo = getVistGraficas().getLienzo();
+    /////ensayo con canvas
+        dobleBuffer = new BufferedImage(lienzo.getWidth(), lienzo.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            
+        
+        Graphics pincel = dobleBuffer.getGraphics();
+        pincel.setColor(Color.YELLOW);
+        pincel.drawOval(100, 100, 50, 100);
+        pincel.fillOval(100, 100, 50, 100);        
+        
+        
+        
+        
+                        
+        //Image myImage = getImage("/imagenesprueba/ironman.png");  //Sólo en métodos de una subclase de Applet
+        //Image myImage = Toolkit.getDefaultToolkit().getImage("/imagenesprueba/ironman.png");
+
+        
+        Graphics lapiz = lienzo.getGraphics();
+          lapiz.drawImage(dobleBuffer, 0, 0, lienzo);
+          
+                        
+                        //////////
+    }
+    
+    
     public void ReportGraficar(int tipoconsulta){
         Logica.logBilletera billetera = new logBilletera();
         List<logBilletera> billeteraCuenta = null;
-        
+////variables canvas
+        Canvas lienzo = getVistGraficas().getLienzo();
+        dobleBuffer = new BufferedImage(lienzo.getWidth(), lienzo.getHeight(), BufferedImage.TYPE_INT_ARGB);        
+        Graphics pincel = dobleBuffer.getGraphics();
+
         
         switch (tipoconsulta) {
             case 1:
                 //String FechaInicio, FechaFin;
-                Date date1, date2;
-                Logica.logBilletera billeterafech = new logBilletera();
+                    Date date1, date2;
+                    Logica.logBilletera billeterafech = new logBilletera();
         //conversion de fechas al modelo de sql   
-                try {
+                    try {
         //Aca llamo a la funcion de Logica de la consuta 
-                    date1 = getVistaReportes().getJdcfechainicial().getDate();
-                    java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
-                    date2 = getVistaReportes().getJdcfechafinal().getDate();
-                    java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
+                        date1 = getVistaReportes().getJdcfechainicial().getDate();
+                        java.sql.Date FechaInicio = new java.sql.Date(date1.getTime());
+                        date2 = getVistaReportes().getJdcfechafinal().getDate();
+                        java.sql.Date FechaFin = new java.sql.Date(date2.getTime());
 
-                billeterafech.setFechaIniMovimiento(FechaInicio);
-                billeterafech.setFechaFinMovimiento(FechaFin);        
+                        billeterafech.setFechaIniMovimiento(FechaInicio);
+                        billeterafech.setFechaFinMovimiento(FechaFin);        
 
-
+                        int suma=0;
                         billeteraCuenta = billeterafech.consultarMovimientos(1);
-                        DefaultPieDataset dataf= new DefaultPieDataset();
                         Iterator<logBilletera> it = billeteraCuenta.iterator();                
+
                         while(it.hasNext()){
-                            //ya que es un array nos toca optener los valores de  cada registro
                             logBilletera movimiento = it.next();
-                            //dataf.setValue(movimiento.getFechaIniMovimiento(), movimiento.getNombreCategoria(), movimiento.getNombreCuenta(), movimiento.getNombreTipoMovimiento());
-                            dataf.setValue(movimiento.getFechaIniMovimiento(), movimiento.getTotal());
-                        }       // Creando el Grafico
-                        JFreeChart chartF = ChartFactory.createPieChart(
-                                "Movimientos por fechas",
-                                dataf,
-                                true,
-                                true,
-                                false);// Mostrar Grafico
-                        ChartFrame frameFecha = new ChartFrame("JFreeChart", chartF);
-                        frameFecha.pack();
-                        frameFecha.setVisible(true);
+                            suma=suma+movimiento.getTotal();
+                        }
+                        
+                        int r=(int)Math.random()*255;
 
+                        Iterator<logBilletera> it2 = billeteraCuenta.iterator();  
+                        System.out.println("numero iteraciones"+billeteraCuenta.size());
+                        int var=0,var2=100,var3=120;
+                        while(it2.hasNext()){
+                            logBilletera movimiento2 = it2.next();
+                            int grado=movimiento2.getTotal()*360/suma;
+                            pincel.setColor(new Color(r,var,grado));
+                            pincel.fillArc(0,100,100,100,var,grado);
+                            pincel.fillRect(200,var2,20,20);
+                            pincel.drawString(movimiento2.getFechaIniMovimiento().toString(), 120, var3);   
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Debe indicar las fechas de consulta");
-                }
+                            Graphics lapiz = lienzo.getGraphics();
+                            lapiz.drawImage(dobleBuffer, 0, 0, lienzo);
+                            var=var+grado;
+                            var2=var2+30;
+                            var3=var3+30;
 
-                break;
+                        }                        
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Debe indicar las fechas de consulta");
+                    }
+                    break;
             case 2:
                 Logica.logBilletera billeteracat = new logBilletera();        
 
@@ -729,23 +799,37 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
                     billeteracat.setFechaIniMovimiento(FechaInicio);
                     billeteracat.setFechaFinMovimiento(FechaFin); 
                 }                
+                    int suma=0;
                 billeteraCuenta = billeteracat.consultarMovimientos(2);                
-                DefaultPieDataset data2 = new DefaultPieDataset();
-                Iterator<logBilletera> it2 = billeteraCuenta.iterator();                
+                Iterator<logBilletera> it = billeteraCuenta.iterator();                
+                
+                while(it.hasNext()){
+                    logBilletera movimiento = it.next();
+                    suma=suma+movimiento.getTotal();
+                }    
+
+                int r=(int)Math.random()*255;
+
+                Iterator<logBilletera> it2 = billeteraCuenta.iterator();  
+                
+                int var=0,var2=100,var3=120;
                 while(it2.hasNext()){
-                    //ya que es un array nos toca optener los valores de  cada registro
-                    logBilletera movimiento = it2.next();
-                    data2.setValue(movimiento.getNombreCategoria(), movimiento.getTotal());
-                }       // Creando el Grafico
-                JFreeChart chartCat = ChartFactory.createPieChart(
-                        "Movimientos por Categorias",
-                        data2,
-                        true,
-                        true,
-                        false);// Mostrar Grafico
-                ChartFrame frameCat = new ChartFrame("JFreeChart", chartCat);
-                frameCat.pack();
-                frameCat.setVisible(true);
+                    logBilletera movimiento2 = it2.next();
+                    int grado=movimiento2.getTotal()*360/suma;
+                    int grado2=grado;
+                    if(grado>255)grado2=255;
+                    pincel.setColor(new Color(r,var,grado2));
+                    pincel.fillArc(0,100,100,100,var,grado);
+                    pincel.fillRect(200,var2,20,20);
+                    pincel.drawString(movimiento2.getNombreCategoria(), 120, var3);   
+
+                    Graphics lapiz = lienzo.getGraphics();
+                    lapiz.drawImage(dobleBuffer, 0, 0, lienzo);
+                    var=var+grado;
+                    var2=var2+30;
+                    var3=var3+30;
+                }                        
+                
                 break;
             default:
                 Logica.logBilletera billeteraIE = new logBilletera();                
@@ -760,23 +844,43 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
                     billeteraIE.setFechaFinMovimiento(FechaFin); 
                 }        
                 billeteraCuenta = billeteraIE.consultarMovimientos(3);                
-                DefaultPieDataset data3 = new DefaultPieDataset();
                 Iterator<logBilletera> it3 = billeteraCuenta.iterator();                
+                int suma3=0;
+                
                 while(it3.hasNext()){
                     //ya que es un array nos toca optener los valores de  cada registro
                     logBilletera movimiento = it3.next();
-                    data3.setValue(movimiento.getNombreTipoMovimiento(), movimiento.getTotal());
-                }       // Creando el Grafico
-                JFreeChart chartIE = ChartFactory.createPieChart(
-                        "Movimientos por Ingreso vs Egresos",
-                        data3,
-                        true,
-                        true,
-                        false);// Mostrar Grafico
-                ChartFrame frameIE = new ChartFrame("JFreeChart", chartIE);
-                frameIE.pack();
-                frameIE.setVisible(true);
+                    suma3=suma3+movimiento.getTotal();
+                }
+                int r3=(int)Math.random()*255;
+
+                Iterator<logBilletera> it4 = billeteraCuenta.iterator();  
+                
+                int var4=0,var5=100,var6=120;
+                while(it4.hasNext()){
+                    logBilletera movimiento2 = it4.next();
+                    int grado=movimiento2.getTotal()*360/suma3;
+                    int blue=grado;
+                    int green=var4;
+                    if(grado>255)blue=255;
+                    if(var4>255)green=255;
+                    pincel.setColor(new Color(r3,green,blue));
+                    pincel.fillArc(0,100,100,100,var4,grado);
+                    pincel.fillRect(200,var5,20,20);
+                    pincel.drawString(movimiento2.getNombreTipoMovimiento(), 120, var6);   
+
+                    Graphics lapiz = lienzo.getGraphics();
+                    lapiz.drawImage(dobleBuffer, 0, 0, lienzo);
+                    var4=var4+grado;
+                    var5=var5+30;
+                    var6=var6+30;
+                }                        
+                
+                
+                
+//                    data3.setValue(movimiento.getNombreTipoMovimiento(), movimiento.getTotal());
                 break;
+
         }
 
 
@@ -818,7 +922,35 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
             cbCuenta.addItem(new Item(billeteraCuentas.get(i).getIdCuenta(), billeteraCuentas.get(i).getNombreCuenta()));
         }
     }
-    
+
+    public void iniciarAnimacion() {
+        animando = true;
+        hiloDibujo = new Thread(this);
+        hiloDibujo.start();
+    }
+
+    @Override
+    public void run() {
+        int tipoconsulta=1;
+        if (vistaReportes.getRbnFechas().isSelected()) {
+                tipoconsulta=1;
+        }else if (vistaReportes.getRbnCategorias().isSelected()) {
+                tipoconsulta=2;
+        }else if (vistaReportes.getRbningvsegreso().isSelected()) {
+                tipoconsulta=3;
+        }            
+      
+        while(animando){
+            try {
+                Thread.sleep(20);
+                //GraficasReporte();
+                ReportGraficar(tipoconsulta);
+            } catch (InterruptedException ex) {
+            }
+        }
+        
+    }
+  
     public void seleccionarItem(JComboBox cbTipoCuenta,int indice){
         Item item;
         for (int i = 0; i < cbTipoCuenta.getItemCount(); i++)

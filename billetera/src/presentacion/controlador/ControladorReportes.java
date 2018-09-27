@@ -41,7 +41,8 @@ public class ControladorReportes implements ActionListener{
             }else if (ventanaReportes.getRbningvsegreso().isSelected()) {
                 tipoconsulta=3;
             }            
-            ventanaReportes.getModelo().ReportGraficar(tipoconsulta);
+            //ventanaReportes.getModelo().ReportGraficar(tipoconsulta);
+            ventanaReportes.getModelo().funcionVistaGraficas();
         }
         if (e.getSource()==ventanaReportes.getBtnregresar()) {
         ventanaReportes.getModelo().funcionVistaRegresar();
