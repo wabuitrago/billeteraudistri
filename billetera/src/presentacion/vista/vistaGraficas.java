@@ -7,6 +7,7 @@ package presentacion.vista;
 
 import java.awt.Canvas;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import presentacion.controlador.ControladorGraficas;
 import presentacion.modelo.Modelo;
 
@@ -44,6 +45,10 @@ public class vistaGraficas extends javax.swing.JFrame {
         return Btnregresar;
     }
 
+    public JLabel getEtiTitulo() {
+        return EtiTitulo;
+    }
+
 
 
     @SuppressWarnings("unchecked")
@@ -52,6 +57,7 @@ public class vistaGraficas extends javax.swing.JFrame {
 
         lienzo = new java.awt.Canvas();
         Btnregresar = new javax.swing.JButton();
+        EtiTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,21 +70,26 @@ public class vistaGraficas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(80, 80, 80)
+                        .addComponent(EtiTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
                         .addComponent(lienzo, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
+                        .addGap(146, 146, 146)
                         .addComponent(Btnregresar)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lienzo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(EtiTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lienzo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btnregresar)
-                .addContainerGap())
+                .addGap(36, 36, 36))
         );
 
         lienzo.getAccessibleContext().setAccessibleName("");
@@ -88,6 +99,7 @@ public class vistaGraficas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btnregresar;
+    private javax.swing.JLabel EtiTitulo;
     private java.awt.Canvas lienzo;
     // End of variables declaration//GEN-END:variables
 

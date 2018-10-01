@@ -246,6 +246,20 @@ public class Modelo implements Runnable{
            getVistGraficas().setVisible(false);
            animando=false;
         }	        
+        public void funcionVistaRegresarGrafica(){
+	//Muchas cosas para crear la vista        
+           getVistaReportes().setVisible(false);
+           getVistaPrincipal().setVisible(false);          
+           getVistaCategorias().setVisible(false);                     
+           getVistaReportes().setVisible(true);
+           getVistaCuentas().setVisible(false);
+           getVistaMovimiento().setVisible(false);
+           getVistaMovimientosEgreso().setVisible(false);
+           getVistaMovimientosIngreso().setVisible(false);
+           getVistaMovimientosTrans().setVisible(false);
+           getVistGraficas().setVisible(false);
+           animando=false;
+        }	                
 
 ///funciones para la vista de Cuentas    
 
@@ -766,12 +780,13 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
 
                         Iterator<logBilletera> it2 = billeteraCuenta.iterator();  
                         System.out.println("numero iteraciones"+billeteraCuenta.size());
-                        int var=0,var2=100,var3=120;
+                        vistaGraficas.getEtiTitulo().setText("Grafica por Fechas");
+                        int var=0,var2=20,var3=35;
                         while(it2.hasNext()){
                             logBilletera movimiento2 = it2.next();
-                            int grado=movimiento2.getTotal()*360/suma;
+                            int grado=movimiento2.getTotal()*364/suma;
                             pincel.setColor(new Color(r,var,grado));
-                            pincel.fillArc(0,100,100,100,var,grado);
+                            pincel.fillArc(0,20,100,100,var,grado);
                             pincel.fillRect(200,var2,20,20);
                             pincel.drawString(movimiento2.getFechaIniMovimiento().toString(), 120, var3);   
 
@@ -811,15 +826,15 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
                 int r=(int)Math.random()*255;
 
                 Iterator<logBilletera> it2 = billeteraCuenta.iterator();  
-                
-                int var=0,var2=100,var3=120;
+                vistaGraficas.getEtiTitulo().setText("Grafica por Categorias");
+                int var=0,var2=20,var3=35;
                 while(it2.hasNext()){
                     logBilletera movimiento2 = it2.next();
-                    int grado=movimiento2.getTotal()*360/suma;
+                    int grado=movimiento2.getTotal()*364/suma;
                     int grado2=grado;
                     if(grado>255)grado2=255;
                     pincel.setColor(new Color(r,var,grado2));
-                    pincel.fillArc(0,100,100,100,var,grado);
+                    pincel.fillArc(0,20,100,100,var,grado);
                     pincel.fillRect(200,var2,20,20);
                     pincel.drawString(movimiento2.getNombreCategoria(), 120, var3);   
 
@@ -855,17 +870,17 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
                 int r3=(int)Math.random()*255;
 
                 Iterator<logBilletera> it4 = billeteraCuenta.iterator();  
-                
-                int var4=0,var5=100,var6=120;
+                vistaGraficas.getEtiTitulo().setText("Grafica por Ingreso Vs Egreso");
+                int var4=0,var5=20,var6=35;
                 while(it4.hasNext()){
                     logBilletera movimiento2 = it4.next();
-                    int grado=movimiento2.getTotal()*360/suma3;
+                    int grado=movimiento2.getTotal()*364/suma3;
                     int blue=grado;
                     int green=var4;
                     if(grado>255)blue=255;
                     if(var4>255)green=255;
                     pincel.setColor(new Color(r3,green,blue));
-                    pincel.fillArc(0,100,100,100,var4,grado);
+                    pincel.fillArc(0,20,100,100,var4,grado);
                     pincel.fillRect(200,var5,20,20);
                     pincel.drawString(movimiento2.getNombreTipoMovimiento(), 120, var6);   
 
@@ -942,9 +957,10 @@ public void llenarTablamov(JTable tablaR, List<logBilletera> resultado){
       
         while(animando){
             try {
-                Thread.sleep(20);
+                Thread.sleep(400);
                 //GraficasReporte();
                 ReportGraficar(tipoconsulta);
+                animando=false;
             } catch (InterruptedException ex) {
             }
         }

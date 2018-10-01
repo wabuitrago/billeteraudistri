@@ -27,7 +27,7 @@ public class ControladorGraficas implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
        if (e.getSource()==ventanaGraficas.getBtnregresar()) {
-            ventanaGraficas.getModelo().funcionVistaRegresar();
+            ventanaGraficas.getModelo().funcionVistaRegresarGrafica();
         }           
        
     }
